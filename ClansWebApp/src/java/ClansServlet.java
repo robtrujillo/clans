@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import com.clans.config.DBSingleton;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -52,7 +53,7 @@ public class ClansServlet extends HttpServlet {
                 + "<title> My first jsp  </title> \n"
                 + "</head> \n"
                 + "<body> \n"
-                + table
+                + table 
                 + "</font> \n"
                 + "</body> \n"
                 + "</html>"
@@ -99,11 +100,8 @@ public class ClansServlet extends HttpServlet {
     }// </editor-fold>
 
     private String getTable() throws SQLException, ClassNotFoundException {
-        Class.forName(JDBC_DRIVER);
-        Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-        Statement statement = connection.createStatement();
-        statement.executeQuery("use clans");
-        ResultSet resultSet = statement.executeQuery("call get_users(null,null)");
+        
+        ResultSet resultSet = DBSingleton.getSingleton().getQuery("call get_users(null,null)");
         String table = new String("");
         for (int x = 1; x <= resultSet.getMetaData().getColumnCount(); x++) {
             table = table.concat(resultSet.getMetaData().getColumnName(x) + "\t\t");
