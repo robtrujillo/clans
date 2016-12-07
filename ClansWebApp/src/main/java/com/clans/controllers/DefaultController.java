@@ -28,6 +28,7 @@ public class DefaultController {
             ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
             map.put("listUsers", listUsers);
             map.put("msg", "Hello Spring 4 Web MVC!");
+            map.put("user", user);
         } catch (Exception e) {
             map.put("msg", e.toString());
         }

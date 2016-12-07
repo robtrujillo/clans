@@ -9,7 +9,10 @@ import com.clans.dao.UsersDAO;
 import com.clans.models.UserModel;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,18 +25,26 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Chuntak
  */
 @Controller
-@RequestMapping(value = "/helloworld.htm")
 public class UserController {
 
-    //@Autowired
-    public class HelloWorldController {
+    @RequestMapping(value = "/userModel", method = RequestMethod.GET)
+    public ModelAndView userModel() {
+        return new ModelAndView("userModel", "command", new UserModel());
+    }
 
-        @RequestMapping(method = RequestMethod.GET)
-        public String helloWorld(ModelMap modelMap) {
-            System.out.println("on method");
-            modelMap.put("printme", "Hello Spring !!");
-            return "index";
+    @RequestMapping(value = "/getUsers", method = RequestMethod.POST)
+    public String getUsers(@ModelAttribute("ClansWebApp") UserModel user,
+            ModelMap model) {
+        try {
+            ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
+            model.put("listUsersV", listUsers);
+            return "viewUsers";
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "index";
     }
 
     public ModelAndView listUsers(ModelAndView model, @ModelAttribute UserModel user) throws SQLException, IOException {

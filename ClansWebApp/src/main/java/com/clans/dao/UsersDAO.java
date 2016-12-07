@@ -35,8 +35,19 @@ public class UsersDAO {
         ArrayList<UserModel> al = new ArrayList<UserModel>();
         while (rs.next()) {
             UserModel um = new UserModel();
+            um.setUserId(rs.getInt("UserId"));
             um.setFirstName(rs.getString("FirstName"));
             um.setLastName(rs.getString("LastName"));
+            um.setPassword(rs.getString("Pass"));
+            um.setPhoneNum(rs.getString("PhoneNum"));
+            um.setStreet(rs.getString("Street"));
+            um.setCity(rs.getString("City"));
+            um.setZipcode(rs.getInt("ZipCode"));
+            um.setState(rs.getString("State"));
+            um.setCountry(rs.getString("Country"));
+            um.setEmail(rs.getString("email"));
+            um.setSignedIn(rs.getBoolean("SignedIn"));
+            um.setIsEmployee(rs.getBoolean("IsEmployee"));
             al.add(um);
         }
         return al;
