@@ -14,5 +14,9 @@
             EXPLOSION <br>
             <input type="submit" value="BOOM">
         </form>
+    <c:forEach var="user" items="${listUsers}" varStatus="status">
+        <h1>${status.index}</h1>
+        <h1>${user.firstName}</h1>
+    </c:forEach>
     </body>
 </html>

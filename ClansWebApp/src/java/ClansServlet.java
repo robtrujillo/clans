@@ -101,7 +101,7 @@ public class ClansServlet extends HttpServlet {
 
     private String getTable() throws SQLException, ClassNotFoundException {
         
-        ResultSet resultSet = DBSingleton.getSingleton().getQuery("call get_users(null,null)");
+        ResultSet resultSet = DBSingleton.getSingleton().getQuery("call get_users(null,null,null)");
         String table = new String("");
         for (int x = 1; x <= resultSet.getMetaData().getColumnCount(); x++) {
             table = table.concat(resultSet.getMetaData().getColumnName(x) + "\t\t");
