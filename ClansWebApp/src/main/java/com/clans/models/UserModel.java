@@ -27,7 +27,6 @@ public class UserModel {
     
     public UserModel(){
         // DEFAULT VALUES ARE FINE
-        
     }
 
     /**

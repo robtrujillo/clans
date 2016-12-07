@@ -24,10 +24,11 @@ public class UsersDAO {
     }
 
     public ArrayList<UserModel> getUsers(UserModel user) throws SQLException, ClassNotFoundException {
-        PreparedStatement ps = dbs.getPreparedStatement("call get_users(?,?,?)");
+        PreparedStatement ps = dbs.getPreparedStatement("call get_users(?,?,?,?)");
         ps.setInt(1, user.getUserId());
         ps.setString(2, user.getEmail());
-        ps.setString(3, user.getFirstName() != null ? user.getFirstName() : user.getLastName());
+        ps.setString(3, user.getPassword());
+        ps.setString(4, user.getFirstName() != null ? user.getFirstName() : user.getLastName());
         return getUsersArray(ps.executeQuery());
     }
 

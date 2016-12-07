@@ -12,19 +12,22 @@
         <script src="${cp}/resources/js/js.js"></script>
     </head>
     <body>
-        <h4>Spring 4 Web MVC via Annotations</h4>
-        Spring says: <span class="blue">${msg}</span>
+        
         <%--<c:forEach var="user" items="${listUsers}">--%>
             <!--<h4>${user.firstName} ${user.lastName}</h4>-->
         <%--</c:forEach>--%>
 
 
-        <h2>Get User Info</h2>
+        <h2>Login</h2>
         <form:form method="POST" commandName="user" action="/ClansWebApp/getUsers">
             <table>
                 <tr>
-                    <td><form:label path="firstName">First Name</form:label></td>
-                    <td><form:input path="firstName" /></td>
+                    <td>Email</td>
+                    <td><form:input path="email" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><form:input path="password" /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

@@ -7,6 +7,7 @@ package com.clans.controllers;
 
 import com.clans.dao.UsersDAO;
 import com.clans.models.UserModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,8 @@ public class DefaultController {
             UserModel user = new UserModel();
             ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
             map.put("listUsers", listUsers);
-            map.put("msg", "Hello Spring 4 Web MVC!");
             map.put("user", user);
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
             map.put("msg", e.toString());
         }
        return "index";
