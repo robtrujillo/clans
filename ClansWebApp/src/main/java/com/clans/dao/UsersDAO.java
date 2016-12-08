@@ -46,6 +46,25 @@ public class UsersDAO {
         ps.setBoolean(18, false);
         ps.executeQuery();
     }
+    
+    public void updatePreference(UserModel um, String pref) throws SQLException, ClassNotFoundException {
+        /*Prepare SQL statement*/
+        PreparedStatement ps = dbs.getPreparedStatement("call update_preferences(?,?)");
+        ps.setInt(1, um.getUserId());
+        ps.setString(2, pref);
+        ps.executeQuery();
+    }
+    
+    public boolean deletePreference(UserModel um, String pref) throws SQLException, ClassNotFoundException {
+        /*Prepare SQL statement*/
+        PreparedStatement ps = dbs.getPreparedStatement("call delete_preferences(?,?)");
+        ps.setInt(1, um.getUserId());
+        ps.setString(2, pref);
+        ps.executeQuery();
+        return true;
+    }
+    
+    //GET PREFERENCES??
 
     public ArrayList<UserModel> getUsers(UserModel user) throws SQLException, ClassNotFoundException {
         /*Prepare sql statements*/
