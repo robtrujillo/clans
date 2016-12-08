@@ -14,6 +14,7 @@ public class UserModel {
     private int userId;
     private String firstName; 
     private String lastName;
+    private String sex;
     private String email;
     private String password;
     private String phoneNum;
@@ -209,5 +210,19 @@ public class UserModel {
      */
     public void setIsEmployee(boolean isEmployee) {
         this.isEmployee = isEmployee;
+    }
+
+    /**
+     * @return the sex
+     */
+    public String getSex() {
+        return sex;
+    }
+
+    /**
+     * @param sex the sex to set
+     */
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

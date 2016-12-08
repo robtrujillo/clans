@@ -11,7 +11,7 @@ import java.sql.SQLException;
  *
  * @author Chuntak
  */
-public class AccountsDAO {
+public class AccountsDAO { 
     DBSingleton dbs;
     public AccountsDAO() throws SQLException, ClassNotFoundException {
         dbs = DBSingleton.getSingleton();

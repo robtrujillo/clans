@@ -32,7 +32,7 @@ public class UserController {
         return new ModelAndView("userModel", "command", new UserModel());
     }
 
-    @RequestMapping(value = "/getUsers", method = RequestMethod.POST)
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public String getUsers(@ModelAttribute("ClansWebApp") UserModel user,
             ModelMap model) {
         try {
