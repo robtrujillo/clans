@@ -22,7 +22,7 @@
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
     <body>
-         <h2>EMPLOYEE</h2>
+        <h2>MANAGER_PAGE</h2>
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>

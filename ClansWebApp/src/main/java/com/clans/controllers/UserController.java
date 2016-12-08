@@ -56,6 +56,9 @@ public class UserController {
             if (loggedUser.isIsEmployee()) {
                loggedUser = new EmployeesDAO().getEmployeeModelById(loggedUser.getUserId());
                model.put("employee", loggedUser);
+               if(((EmployeeModel)loggedUser).isIsManager()){
+                   return "manager_page";
+               }
                return "employee_page";
             } else {
                 /* USER LOGGED IN. RETURN THEIR PAGE DATA */
