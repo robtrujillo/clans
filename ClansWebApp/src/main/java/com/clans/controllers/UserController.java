@@ -99,6 +99,8 @@ public class UserController {
         }
         return "index";
     }
+    
+  
 
     public ModelAndView listUsers(ModelAndView model, @ModelAttribute UserModel user) throws SQLException, IOException {
         try {

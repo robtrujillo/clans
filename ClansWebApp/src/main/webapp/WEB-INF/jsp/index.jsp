@@ -8,11 +8,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Clans Web App</title>
+        
+        
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/site.css" />
-        <script src="${cp}/resources/js/js.js"></script>
+
     </head>
     <body>
-        
+
         <%--<c:forEach var="user" items="${listUsers}">--%>
             <!--<h4>${user.firstName} ${user.lastName}</h4>-->
         <%--</c:forEach>--%>
@@ -37,9 +39,9 @@
             </table>               
         </form:form>
         <form:form method="POST" commandName="user" action="/ClansWebApp/register">
-               
+
             <input type="submit" value="Register"/>
-               
+
         </form:form>
     </body>
 

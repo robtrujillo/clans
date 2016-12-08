@@ -55,6 +55,7 @@ public class PagesDAO {
             um.setEmail(rs.getString("email"));
             um.setSignedIn(rs.getBoolean("SignedIn"));
             um.setIsEmployee(rs.getBoolean("IsEmployee"));
+            um.setSex(rs.getString("Sex"));
         }
         pm.setUser(um);
         /* RETURN DATA */
