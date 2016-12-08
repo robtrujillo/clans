@@ -19,7 +19,7 @@
 
 
         <h2>Login</h2>
-        <form:form method="GET" commandName="user" action="/ClansWebApp/getUsers">
+        <form:form method="GET" commandName="user" action="/ClansWebApp/login">
             <table>
                 <tr>
                     <td>Email</td>

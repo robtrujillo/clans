@@ -5,7 +5,9 @@
  */
 package com.clans.controllers;
 
+import com.clans.dao.PagesDAO;
 import com.clans.dao.UsersDAO;
+import com.clans.models.PageModel;
 import com.clans.models.UserModel;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,6 +33,46 @@ public class UserController {
     public ModelAndView userModel() {
         return new ModelAndView("userModel", "command", new UserModel());
     }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(@ModelAttribute("ClansWebApp") UserModel user,
+            ModelMap model) {
+        try {
+//            if(!user.getEmail().equals("") && !user.getPassword().equals("")){
+//                ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
+//                model.put("listUsersV", listUsers);
+//                return "viewUsers";
+//            }
+            if(user.getEmail().equals("") || user.getPassword().equals("")){
+                model.put("user", user);
+                return "index";
+            }
+            
+            /* CHECK IF USER EXISTS */
+            ArrayList<UserModel> ums = new UsersDAO().getUsers(user);
+            if(ums.isEmpty()){
+                model.put("user", user);
+                return "index";
+            }
+            
+            /* GET THE USER LOGGING IN */
+            UserModel loggedUser = ums.get(0);
+            
+            /* USER LOGGED IN. RETURN THEIR PAGE DATA */
+            PageModel userPage = new PagesDAO().getUserPage(loggedUser);
+            model.put("page", userPage);
+            return "user_page";
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "index";
+    }
+    
+    @RequestMapping(value = "/updateUsers", method = RequestMethod.POST)
+    public void updateUsers(@ModelAttribute("ClansWebApp") UserModel user){
+        
+    }
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public String getUsers(@ModelAttribute("ClansWebApp") UserModel user,
@@ -39,9 +81,7 @@ public class UserController {
             ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
             model.put("listUsersV", listUsers);
             return "viewUsers";
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "index";
@@ -54,7 +94,7 @@ public class UserController {
             model.addObject("listUsers", listUsers);
             model.setViewName("index");
             return model;
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
         return null;
