@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Employee Page</title>
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/bootstrap.min.css" />
@@ -21,6 +22,7 @@
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
     <body>
+         <h2>EMPLOYEE</h2>
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>
