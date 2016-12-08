@@ -9,7 +9,7 @@ package com.clans.models;
  *
  * @author rvtru
  */
-public class GroupModel {
+public class GroupModel extends Model{
     
     private int groupId;
     private UserModel owner;

@@ -9,7 +9,7 @@ package com.clans.models;
  *
  * @author rvtru
  */
-public class UserModel {
+public class UserModel extends Model{
     
     private int userId;
     private String firstName; 

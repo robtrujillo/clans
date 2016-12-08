@@ -12,7 +12,7 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class AdModel {
+public class AdModel extends Model{
     
     private int adId;
     private EmployeeModel employee;
@@ -22,8 +22,8 @@ public class AdModel {
     private Time time;
     private String company;
     private String content;
-    private String unitPrice;
-    private String numAvailable;
+    private double unitPrice;
+    private int numAvailable;
 
     public AdModel(){
         employee = new EmployeeModel();
@@ -144,28 +144,28 @@ public class AdModel {
     /**
      * @return the unitPrice
      */
-    public String getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
     /**
      * @param unitPrice the unitPrice to set
      */
-    public void setUnitPrice(String unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
     /**
      * @return the numAvailable
      */
-    public String getNumAvailable() {
+    public int getNumAvailable() {
         return numAvailable;
     }
 
     /**
      * @param numAvailable the numAvailable to set
      */
-    public void setNumAvailable(String numAvailable) {
+    public void setNumAvailable(int numAvailable) {
         this.numAvailable = numAvailable;
     }
     

@@ -12,7 +12,7 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class CommentModel {
+public class CommentModel extends Model{
     
     private int commentId;
     private int postId;

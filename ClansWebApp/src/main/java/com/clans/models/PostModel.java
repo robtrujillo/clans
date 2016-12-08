@@ -12,7 +12,7 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class PostModel {
+public class PostModel extends Model{
     
     private int postId;
     private UserModel author;

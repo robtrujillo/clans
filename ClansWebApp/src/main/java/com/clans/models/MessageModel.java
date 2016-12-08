@@ -12,7 +12,7 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class MessageModel {
+public class MessageModel extends Model{
     
     private int messageId;
     private UserModel sender;

@@ -9,7 +9,7 @@ package com.clans.models;
  *
  * @author rvtru
  */
-public class PageModel {
+public class PageModel extends Model{
     
     private int pageId;
     private UserModel user;

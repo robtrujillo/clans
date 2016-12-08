@@ -12,7 +12,7 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class SaleModel {
+public class SaleModel extends Model{
     private int saleId;
     private AdModel ad;
     private AccountModel account;
