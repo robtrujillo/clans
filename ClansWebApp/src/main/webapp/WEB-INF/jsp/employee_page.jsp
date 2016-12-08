@@ -38,7 +38,44 @@
                     <td><p id="email" class="text-info">${employee.street}, ${employee.city}, ${employee.state} ${employee.zipcode}</p></td>
                 </tr>
 
-                [[HELLO]]
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1">Create Advertisement</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Item Type:</label>
+                                    <input type="text ng-model="itemType" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Company:</label>
+                                    <input type="text ng-model="company" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Item Name:</label>
+                                    <input type="text ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Content:</label>
+                                    <input placeholder="type content here" type="text ng-model="content" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Unit Price:</label>
+                                    <input type="text ng-model="unitPrice" class="form-control">
+                                </div>
+                                 <div class="form-group">
+                                    <label>Number Avaliable:</label>
+                                    <input type="text ng-model="numAvaliable" class="form-control">
+                                </div>
+                            </ul>
+                             <a ng-click='updateAd()'>Create Advertisement</a>
+                        </div>
+                    </div>
+                </div>
 
         </div>
     </body>
