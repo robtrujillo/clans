@@ -18,12 +18,13 @@ import java.util.ArrayList;
  * @author Chuntak
  */
 public class EmployeesDAO {
+
     DBSingleton dbs;
+
     public EmployeesDAO() throws SQLException, ClassNotFoundException {
         dbs = DBSingleton.getSingleton();
     }
-    
-    
+
     public void updateEmployee(EmployeeModel employee) throws SQLException, ClassNotFoundException {
         /*Prepare SQL statements*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_users(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -46,8 +47,8 @@ public class EmployeesDAO {
         ps.setDate(17, employee.getStartDate());
         ps.setBoolean(18, employee.isIsManager());
     }
-    
-    public TopUserModel getTopCustomer() throws SQLException, ClassNotFoundException{
+
+    public TopUserModel getTopCustomer() throws SQLException, ClassNotFoundException {
         ResultSet rs = dbs.getQuery("top_customer");
         TopUserModel tum = new TopUserModel();
         rs.next();
@@ -57,9 +58,8 @@ public class EmployeesDAO {
         tum.setTotalRevenue(rs.getDouble("TotalRevenue"));
         return tum;
     }
-    
-    
-    public TopUserModel getTopEmployee() throws SQLException, ClassNotFoundException{
+
+    public TopUserModel getTopEmployee() throws SQLException, ClassNotFoundException {
         ResultSet rs = dbs.getQuery("top_employee");
         TopUserModel tum = new TopUserModel();
         rs.next();
@@ -69,9 +69,39 @@ public class EmployeesDAO {
         tum.setTotalRevenue(rs.getDouble("TotalRevenue"));
         return tum;
     }
-      
-      public ArrayList<UserModel> getMailingList() throws SQLException, ClassNotFoundException {
-        /*Prepare sql statements*/        
+
+    public EmployeeModel getEmployeeModelById(int id) throws SQLException, ClassNotFoundException {
+        PreparedStatement ps = dbs.getPreparedStatement("call get_employees(?,?,?,?)");
+        ps.setInt(1, id);
+        ps.setString(2, null);
+        ps.setString(3, null);
+        ps.setString(4, null);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        EmployeeModel em = new EmployeeModel();
+        em.setUserId(rs.getInt("UserId"));
+        em.setFirstName(rs.getString("FirstName"));
+        em.setLastName(rs.getString("LastName"));
+        em.setPassword(rs.getString("Pass"));
+        em.setPhoneNum(rs.getString("PhoneNum"));
+        em.setStreet(rs.getString("Street"));
+        em.setCity(rs.getString("City"));
+        em.setZipcode(rs.getInt("ZipCode"));
+        em.setState(rs.getString("State"));
+        em.setCountry(rs.getString("Country"));
+        em.setEmail(rs.getString("Email"));
+        em.setSignedIn(rs.getBoolean("SignedIn"));
+        em.setIsEmployee(rs.getBoolean("IsEmployee"));
+        em.setSex(rs.getString("Sex"));
+        em.setSocial(rs.getInt("Social"));
+        em.setStartDate(rs.getDate("StartDate"));
+        em.setHourlyWage(rs.getDouble("HourlyWage"));
+        em.setIsManager(rs.getBoolean("IsManager"));
+        return em;
+    }
+
+    public ArrayList<UserModel> getMailingList() throws SQLException, ClassNotFoundException {
+        /*Prepare sql statements*/
         return getMailingListArray(dbs.getQuery("get_mailing_list"));
     }
 
