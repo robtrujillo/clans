@@ -38,26 +38,19 @@ public class UserController {
     public String login(@ModelAttribute("ClansWebApp") UserModel user,
             ModelMap model) {
         try {
-//            if(!user.getEmail().equals("") && !user.getPassword().equals("")){
-//                ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
-//                model.put("listUsersV", listUsers);
-//                return "viewUsers";
-//            }
+           
             if(user.getEmail().equals("") || user.getPassword().equals("")){
                 model.put("user", user);
                 return "index";
             }
-            
             /* CHECK IF USER EXISTS */
             ArrayList<UserModel> ums = new UsersDAO().getUsers(user);
             if(ums.isEmpty()){
                 model.put("user", user);
                 return "index";
             }
-            
             /* GET THE USER LOGGING IN */
             UserModel loggedUser = ums.get(0);
-            
             /* USER LOGGED IN. RETURN THEIR PAGE DATA */
             PageModel userPage = new PagesDAO().getUserPage(loggedUser);
             model.put("page", userPage);
@@ -67,6 +60,26 @@ public class UserController {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "index";
+    }
+    
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@ModelAttribute("ClansWebApp") UserModel user,
+            ModelMap model){
+        try{
+            if(!user.hasValues()){
+                model.put("user",user);
+                return "register";
+            }
+            new UsersDAO().updateUser(user);
+            PageModel userPage = new PagesDAO().getUserPage(user);
+            model.put("page", userPage);
+            return "user_page";
+        }
+        catch(Exception ex){
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "index";
+        
     }
     
     @RequestMapping(value = "/updateUsers", method = RequestMethod.POST)

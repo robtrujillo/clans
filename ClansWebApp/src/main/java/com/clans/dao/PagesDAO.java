@@ -5,7 +5,6 @@
  */
 package com.clans.dao;
 
-import com.clans.models.GroupModel;
 import com.clans.models.PageModel;
 import com.clans.models.UserModel;
 import java.sql.PreparedStatement;
@@ -26,6 +25,10 @@ public class PagesDAO {
     
     public PageModel getUserPage(UserModel user) throws SQLException, ClassNotFoundException{
         
+        /* CHECK IF NEED USERID (WOULD BE IF USER WAS JUST INSERTED) */
+        if(user.getUserId() == 0){
+            user.setUserId(new UsersDAO().getUsers(user).get(0).getUserId());
+        }
         /* EXECUTE QUERY FOR USER PAGE */
         PreparedStatement ps = dbs.getPreparedStatement("call get_pages(?,?)");
         ps.setInt(1, 0);

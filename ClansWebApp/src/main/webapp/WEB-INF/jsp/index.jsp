@@ -36,6 +36,11 @@
                 </tr>
             </table>               
         </form:form>
+        <form:form method="POST" commandName="user" action="/ClansWebApp/register">
+               
+            <input type="submit" value="Register"/>
+               
+        </form:form>
     </body>
 
 </html>
