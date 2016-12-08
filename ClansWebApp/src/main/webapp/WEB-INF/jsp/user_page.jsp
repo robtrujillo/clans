@@ -45,38 +45,35 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 {{post.content}}
+                                - {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
                                 <a ng-click="getComments(post.postId)" data-toggle="collapse" data-parent="#accordion"  href="#c_{{$index}}">
                                     See Comments</a>
+                                <br/>
+                                <input id="nc_{{$index}}" type="text" class="form-control" placeholder="Type here for new comment"></input> 
+                                <a ng-click='addComment($index)'>Create Comment</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                             </h4>
                         </div>
                         <div id="c_{{$index}}" class="panel-collapse collapse">
                             <p ng-show='post.comments.length===0'>No Comments</p>
-                            <div class="panel-body" ng-repeat='comment in post.comments'>
-                                <p contenteditable="true" ng-model={{comment.content}}>{{comment.content}}</p> - {{comment.author.firstName}}
+                            <div class="panel-body " ng-repeat='comment in post.comments'>
+                                <input type="text" class="form-control" ng-model="comment.content"></input> 
+                                - {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editComment($parent.$index,$index)'>Save Edit</a>
+                                <a ng-click='editComment($parent.$index,$index,1)'>Like</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='deleteComment($index)'>Delete</a>
-                                <div id='edit_{{$index}}' >
-                                    
-
-                                </div>
+                                <a ng-click='editComment($parent.$index,$index,-1)'>Unlike</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='editComment($parent.$index,$index,0)'>Save Edit</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='deleteComment($parent.$index,$index)'>Delete</a>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </table>  
-            <table>
-
-                <tr ng-repeat="post in posts">
-                <div>
-                    <td>{{post.author.firstName}} {{post.author.lastName}}</td>
-                    <span>{{post.date}}</span>
-                    <td>{{post.content}}</td>
-                    <td>Likes: {{post.likeCount}}</td>
-                </div>
-                </tr>
-            </table>
+            
 
         </div>
     </body>

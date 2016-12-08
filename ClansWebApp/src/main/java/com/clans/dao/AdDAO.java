@@ -29,7 +29,7 @@ public class AdDAO {
         /*PREPARE*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_advertisements(?,?,?,?,?,?,?,?)");
         ps.setInt(1, am.getAdId());
-        ps.setInt(2, am.getEmployee().getUserId());
+        ps.setInt(2, am.getUserId());
         ps.setString(3,am.getItemType());
         ps.setString(4, am.getCompany());
         ps.setString(5, am.getItemName());
@@ -70,9 +70,9 @@ public class AdDAO {
             am.setContent(rs.getString("Content"));
             am.setUnitPrice(rs.getDouble("UnitPrice"));
             am.setNumAvailable(rs.getInt("NumAvailable"));
-            EmployeeModel em = new EmployeeModel();
-            em.setUserId(rs.getInt("EmployeeId"));
-            am.setEmployee(em);
+            //EmployeeModel em = new EmployeeModel();
+            am.setUserId(rs.getInt("EmployeeId"));
+            //am.setEmployee(em);
             aml.add(am);
         }
         return aml;

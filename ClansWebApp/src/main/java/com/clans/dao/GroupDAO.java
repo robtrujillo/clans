@@ -29,7 +29,8 @@ public class GroupDAO {
         /*PREPARE*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_group(?,?,?)");
         ps.setInt(1, gm.getGroupId());
-        ps.setInt(2, gm.getOwner().getUserId());
+        /* OWNER ID */
+        ps.setInt(2, gm.getUserId());
         ps.setString(3, gm.getGroupName());
         /*EXECUTE*/
         ps.executeQuery();
@@ -46,7 +47,7 @@ public class GroupDAO {
 
     public ArrayList<GroupModel> getGroup(GroupModel gm) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_group(?,?)");
-        ps.setInt(1, gm.getOwner().getUserId());
+        ps.setInt(1, gm.getUserId());
         ps.setString(2, gm.getGroupName());
         return getGroupArray(ps.executeQuery());
     }
@@ -57,11 +58,11 @@ public class GroupDAO {
             GroupModel gm = new GroupModel();
             gm.setGroupId(rs.getInt("GroupId"));
             gm.setGroupName(rs.getString("GroupName"));
-            UserModel um = new UserModel();
-            um.setUserId(rs.getInt("UserId"));
-            um.setFirstName(rs.getString("FirstName"));
-            um.setLastName(rs.getString("LastName"));
-            gm.setOwner(um);
+            //UserModel um = new UserModel();
+            gm.setUserId(rs.getInt("UserId"));
+            gm.setFirstName(rs.getString("FirstName"));
+            gm.setLastName(rs.getString("LastName"));
+            //gm.setOwner(um);
             gml.add(gm);
         }
         return gml;

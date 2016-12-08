@@ -73,4 +73,21 @@ public class PageController {
         }
         return false;
     }
+    
+    @RequestMapping(value = "/byeComment", method = RequestMethod.GET)
+    public @ResponseBody boolean deleteComment(@ModelAttribute("ClansWebApp")  CommentModel comment) {
+        try {
+            if (comment.getCommentId() <= 0) {
+                return true;
+            }
+            else{
+                new CommentDAO().deleteComment(comment);
+                return true;
+            }
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
 }

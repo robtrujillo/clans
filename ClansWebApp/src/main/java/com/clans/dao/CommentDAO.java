@@ -31,7 +31,7 @@ public class CommentDAO {
         PreparedStatement ps = dbs.getPreparedStatement("call update_comments(?,?,?,?,?)");
         ps.setInt(1, cm.getCommentId());
         ps.setInt(2, cm.getPostId());
-        ps.setInt(3, cm.getAuthor().getUserId());
+        ps.setInt(3, cm.getUserId());
         ps.setString(4, cm.getContent());
         ps.setInt(5, cm.getLikeCount());
         /*EXECUTE*/
@@ -40,10 +40,9 @@ public class CommentDAO {
 
     public boolean deleteComment(CommentModel cm) throws SQLException, ClassNotFoundException {
         /*PREPARE*/
-        PreparedStatement ps = dbs.getPreparedStatement("call delete_comments(?,?,?)");
+        PreparedStatement ps = dbs.getPreparedStatement("call delete_comments(?,?)");
         ps.setInt(1, cm.getCommentId());
         ps.setInt(2, cm.getPostId());
-        ps.setInt(3, cm.getAuthor().getUserId());
         /*EXECUTE*/
         ps.executeQuery();
         return true;
@@ -64,11 +63,11 @@ public class CommentDAO {
             cm.setContent(rs.getString("Content"));
             cm.setDate(rs.getDate("DateCreated"));
             cm.setLikeCount(rs.getInt("LikeCount"));
-            UserModel author = new UserModel();
-            author.setUserId(rs.getInt("AuthorId"));
-            author.setFirstName(rs.getString("FirstName"));
-            author.setLastName(rs.getString("LastName"));
-            cm.setAuthor(author);
+            //UserModel author = new UserModel();
+            cm.setUserId(rs.getInt("AuthorId"));
+            cm.setFirstName(rs.getString("FirstName"));
+            cm.setLastName(rs.getString("LastName"));
+            //cm.setAuthor(author);
             cml.add(cm);
         }
         return cml;
