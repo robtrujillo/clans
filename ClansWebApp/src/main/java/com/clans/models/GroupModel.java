@@ -9,14 +9,14 @@ package com.clans.models;
  *
  * @author rvtru
  */
-public class GroupModel extends Model{
+public class GroupModel extends UserModel{
     
     private int groupId;
-    private UserModel owner;
+    //private UserModel owner;
     private String groupName;
     
     public GroupModel(){
-        owner = new UserModel();
+        //owner = new UserModel();
     }
 
     /**
@@ -33,19 +33,19 @@ public class GroupModel extends Model{
         this.groupId = groupId;
     }
 
-    /**
-     * @return the owner
-     */
-    public UserModel getOwner() {
-        return owner;
-    }
-
-    /**
-     * @param owner the owner to set
-     */
-    public void setOwner(UserModel owner) {
-        this.owner = owner;
-    }
+//    /**
+//     * @return the owner
+//     */
+//    public UserModel getOwner() {
+//        return owner;
+//    }
+//
+//    /**
+//     * @param owner the owner to set
+//     */
+//    public void setOwner(UserModel owner) {
+//        this.owner = owner;
+//    }
 
     /**
      * @return the groupName

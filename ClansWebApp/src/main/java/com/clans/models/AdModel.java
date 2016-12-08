@@ -12,10 +12,10 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class AdModel extends Model{
+public class AdModel extends EmployeeModel{
     
     private int adId;
-    private EmployeeModel employee;
+    //private EmployeeModel employee;
     private String itemType;
     private String itemName;
     private Date date;
@@ -26,7 +26,7 @@ public class AdModel extends Model{
     private int numAvailable;
 
     public AdModel(){
-        employee = new EmployeeModel();
+        //employee = new EmployeeModel();
     }
     
     /**
@@ -43,19 +43,19 @@ public class AdModel extends Model{
         this.adId = adId;
     }
 
-    /**
-     * @return the employee
-     */
-    public EmployeeModel getEmployee() {
-        return employee;
-    }
-
-    /**
-     * @param employee the employee to set
-     */
-    public void setEmployee(EmployeeModel employee) {
-        this.employee = employee;
-    }
+//    /**
+//     * @return the employee
+//     */
+//    public EmployeeModel getEmployee() {
+//        return employee;
+//    }
+//
+//    /**
+//     * @param employee the employee to set
+//     */
+//    public void setEmployee(EmployeeModel employee) {
+//        this.employee = employee;
+//    }
 
     /**
      * @return the itemType

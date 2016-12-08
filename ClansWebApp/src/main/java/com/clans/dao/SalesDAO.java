@@ -31,8 +31,8 @@ public class SalesDAO {
         /*PREPARE*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_sales(?,?,?,?)");
         ps.setInt(1, sm.getSaleId());
-        ps.setInt(2, sm.getAd().getAdId());
-        ps.setInt(3,sm.getAccount().getAccountId());
+        ps.setInt(2, sm.getAdId());
+        ps.setInt(3,sm.getAccountId());
         ps.setInt(4,sm.getNumUnits());
         /*EXECUTE*/
         ps.executeQuery();
@@ -47,38 +47,38 @@ public class SalesDAO {
         return true;
     }
 
-    public ArrayList<ModelList> getSales(SaleModel sm, EmployeeModel em, Date startDate, Date endDate) throws SQLException, ClassNotFoundException {
+    public ArrayList<SaleModel> getSales(SaleModel sm, EmployeeModel em, Date startDate, Date endDate) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_sales(?,?,?,?,?,?)");
         ps.setInt(1, sm.getSaleId());
-        ps.setInt(2, sm.getAccount().getAccountId());
+        ps.setInt(2, sm.getAccountId());
         ps.setInt(3, em.getUserId());
-        ps.setString(4, sm.getAd().getItemName());
+        ps.setString(4, sm.getItemName());
         ps.setDate(5, startDate);
         ps.setDate(6, endDate);
         return getSalesArray(ps.executeQuery());
     }
 
-    private ArrayList<ModelList> getSalesArray(ResultSet rs) throws SQLException {
-        ArrayList<ModelList> mll = new ArrayList<ModelList>();
+    private ArrayList<SaleModel> getSalesArray(ResultSet rs) throws SQLException {
+        ArrayList<SaleModel> ml = new ArrayList<SaleModel>();
         while (rs.next()) {
             SaleModel sm = new SaleModel();
             sm.setSaleId(rs.getInt("SaleId"));
-            AdModel am = new AdModel();
-            am.setAdId(rs.getInt("AdvertisementId"));
-            sm.setAd(am);
-            AccountModel acm = new AccountModel();
-            acm.setAccountId(rs.getInt("AccountId"));
-            sm.setAccount(acm);
+            //AdModel am = new AdModel();
+            sm.setAdId(rs.getInt("AdvertisementId"));
+            //sm.setAd(am);
+            //AccountModel acm = new AccountModel();
+            sm.setAccountId(rs.getInt("AccountId"));
+            //sm.setAccount(acm);
             sm.setNumUnits(rs.getInt("NumUnits"));
             sm.setDate(rs.getDate("SaleDate"));
-            UserModel um = new UserModel();
-            um.setFirstName(rs.getString("FirstName"));
-            um.setLastName(rs.getString("LastName"));
-            ModelList ml = new ModelList();
+            //UserModel um = new UserModel();
+            sm.setFirstName(rs.getString("FirstName"));
+            sm.setLastName(rs.getString("LastName"));
+            //ModelList ml = new ModelList();
             ml.add(sm);
-            ml.add(um);            
-            mll.add(ml);
+            //ml.add(um);            
+            //mll.add(ml);
         }
-        return mll;
+        return ml;
     }
 }

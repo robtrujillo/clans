@@ -28,8 +28,8 @@ public class MessagesDAO {
         /*PREPARE*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_messages(?,?,?,?,?)");
         ps.setInt(1, mm.getMessageId());
-        ps.setInt(2, mm.getSender().getUserId());
-        ps.setInt(3, mm.getReceiver().getUserId());
+        ps.setInt(2, mm.getSenderId());
+        ps.setInt(3, mm.getReceiverId());
         ps.setString(4, mm.getSubject());
         ps.setString(5, mm.getContent());
         /*EXECUTE*/
@@ -63,16 +63,16 @@ public class MessagesDAO {
             mm.setContent(rs.getString("Content"));
             mm.setSubject(rs.getString("MsgSubject"));
             mm.setDate(rs.getDate("DateSent"));
-            UserModel sender = new UserModel();
-            sender.setUserId(rs.getInt("SenderId"));
-            sender.setFirstName(rs.getString("SenderFName"));
-            sender.setLastName(rs.getString("SenderLName"));
-            UserModel rec = new UserModel();
-            rec.setUserId(rs.getInt("RecId"));
-            rec.setFirstName(rs.getString("RecFName"));
-            rec.setLastName(rs.getString("RecLName"));
-            mm.setSender(sender);
-            mm.setReceiver(rec);
+            //UserModel sender = new UserModel();
+            mm.setSenderId(rs.getInt("SenderId"));
+            mm.setSenderFName(rs.getString("SenderFName"));
+            mm.setSenderLName(rs.getString("SenderLName"));
+            //UserModel rec = new UserModel();
+            mm.setReceiverId(rs.getInt("RecId"));
+            mm.setReceiverFName(rs.getString("RecFName"));
+            mm.setReceiverLName(rs.getString("RecLName"));
+            //mm.setSender(sender);
+            //mm.setReceiver(rec);
             ml.add(mm);
         }
         return ml;

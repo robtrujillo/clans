@@ -29,7 +29,7 @@ public class PostsDAO {
         PreparedStatement ps = dbs.getPreparedStatement("call update_posts(?,?,?,?,?,?)");
         ps.setInt(1, pm.getPostId());
         ps.setInt(2, pm.getPageId());
-        ps.setInt(3, pm.getAuthor().getUserId());
+        ps.setInt(3, pm.getUserId());
         ps.setString(4, pm.getContent());
         ps.setInt(5, pm.getCommentCount());
         ps.setInt(6, pm.getLikeCount());
@@ -60,11 +60,11 @@ public class PostsDAO {
             pm.setDate(rs.getDate("DateCreated"));
             pm.setPageId(rs.getInt("PageId"));
             pm.setPostId(rs.getInt("PostId"));
-            UserModel author = new UserModel();
-            author.setUserId(rs.getInt("UserId"));
-            author.setFirstName(rs.getString("FirstName"));
-            author.setLastName(rs.getString("LastName"));
-            pm.setAuthor(author);
+            //UserModel author = new UserModel();
+            pm.setUserId(rs.getInt("UserId"));
+            pm.setFirstName(rs.getString("FirstName"));
+            pm.setLastName(rs.getString("LastName"));
+            //pm.setAuthor(author);
             al.add(pm);
         }
         return al;

@@ -12,11 +12,11 @@ import java.sql.Time;
  *
  * @author rvtru
  */
-public class CommentModel extends Model{
+public class CommentModel extends UserModel{
     
     private int commentId;
     private int postId;
-    private UserModel author;
+    //private UserModel author;
     private int pageId;
     private String content;
     private int likeCount;
@@ -24,7 +24,7 @@ public class CommentModel extends Model{
     private Time time;
 
     public CommentModel(){
-        author = new UserModel();
+        //author = new UserModel();
     }
     
     /**
@@ -55,19 +55,19 @@ public class CommentModel extends Model{
         this.postId = postId;
     }
 
-    /**
-     * @return the author
-     */
-    public UserModel getAuthor() {
-        return author;
-    }
-
-    /**
-     * @param author the author to set
-     */
-    public void setAuthor(UserModel author) {
-        this.author = author;
-    }
+//    /**
+//     * @return the author
+//     */
+//    public UserModel getAuthor() {
+//        return author;
+//    }
+//
+//    /**
+//     * @param author the author to set
+//     */
+//    public void setAuthor(UserModel author) {
+//        this.author = author;
+//    }
 
     /**
      * @return the pageId

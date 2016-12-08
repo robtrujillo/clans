@@ -46,31 +46,54 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("get comments error");
         });
     };
+   
+    $scope.addComment = function(postIndex){
+        index = postIndex;
+        var id = "#nc_" + index
+        content = $(id).val();
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/saveComment',
+            params: {"content": content, "userId":$scope.userId}
+        }).then(function (response) {
+            
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
     
-    $scope.editComment = function(i1, i2){
+    $scope.editComment = function(i1, i2, like){
+        postIndex = i1;
+        commentIndex = i2;
+        comment = $scope.posts[postIndex].comments[commentIndex];
+        likes = like;
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/saveComment',
+            params: {"commentId":comment.commentId, "content": comment.content, "likeCount":like}
+        }).then(function (response) {
+            
+            $scope.posts[postIndex].comments[commentIndex].likeCount += likes;
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
+    
+    $scope.deleteComment = function(i1, i2){
         postIndex = i1;
         commentIndex = i2;
         comment = $scope.posts[postIndex].comments[commentIndex];
         var y = $http({
             method: 'GET',
-            url: '/ClansWebApp/saveComment',
-            params: {"commentId":comment.commentId, "content": comment.content}
+            url: '/ClansWebApp/byeComment',
+            params: {"commentId":comment.commentId}
         }).then(function (response) {
             $scope.posts[index]["comments"] = response.data;
         }, function errorCallBack(response) {
             alert("get comments error\n");
         });
     }
-    $scope.sendPost = function() {
-        var data = $.param({
-            json: JSON.stringify({
-                commentId: comment.commentId
-            })
-        });
-        $http.post("/echo/json/", data).success(function(data, status) {
-            $scope.hello = data;
-        })
-    } 
+    
 
 
 
