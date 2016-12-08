@@ -22,8 +22,9 @@ public class UsersDAO {
     public UsersDAO() throws SQLException, ClassNotFoundException {
         dbs = DBSingleton.getSingleton();
     }
-    
+
     public void updateUser(UserModel user) throws SQLException, ClassNotFoundException {
+        /*Prepare SQL statement*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_users(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         ps.setInt(1, user.getUserId());
         ps.setString(2, user.getFirstName());
@@ -39,9 +40,15 @@ public class UsersDAO {
         ps.setString(12, user.getCountry());
         ps.setBoolean(13, false);
         ps.setBoolean(14, user.isSignedIn());
+        ps.setInt(15, 0);
+        ps.setInt(16, 0);
+        ps.setDate(17, null);
+        ps.setBoolean(18, false);
+        ps.executeQuery();
     }
 
     public ArrayList<UserModel> getUsers(UserModel user) throws SQLException, ClassNotFoundException {
+        /*Prepare sql statements*/
         PreparedStatement ps = dbs.getPreparedStatement("call get_users(?,?,?,?)");
         ps.setInt(1, user.getUserId());
         ps.setString(2, user.getEmail());
@@ -51,6 +58,7 @@ public class UsersDAO {
     }
 
     private ArrayList<UserModel> getUsersArray(ResultSet rs) throws SQLException {
+        /*BUILDS THE ARRAY LIST TO RETURN*/
         ArrayList<UserModel> al = new ArrayList<UserModel>();
         while (rs.next()) {
             UserModel um = new UserModel();

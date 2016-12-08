@@ -22,6 +22,7 @@ public class EmployeesDAO {
     
     
     public void updateEmployee(EmployeeModel employee) throws SQLException, ClassNotFoundException {
+        /*Prepare SQL statements*/
         PreparedStatement ps = dbs.getPreparedStatement("call update_users(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         ps.setInt(1, employee.getUserId());
         ps.setString(2, employee.getFirstName());
@@ -37,6 +38,7 @@ public class EmployeesDAO {
         ps.setString(12, employee.getCountry());
         ps.setBoolean(13, true);
         ps.setBoolean(14, employee.isSignedIn());
+        ps.setInt(15, 0);
         ps.setInt(16, employee.getSocial());
         ps.setDate(17, employee.getStartDate());
         ps.setBoolean(18, employee.isIsManager());
