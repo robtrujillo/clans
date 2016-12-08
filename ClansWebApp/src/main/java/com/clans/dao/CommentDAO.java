@@ -6,6 +6,8 @@
 package com.clans.dao;
 
 import com.clans.models.CommentModel;
+import com.clans.models.PageModel;
+import com.clans.models.PostModel;
 import com.clans.models.UserModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,9 +49,9 @@ public class CommentDAO {
         return true;
     }
 
-    public ArrayList<CommentModel> getComments(CommentModel cm) throws SQLException, ClassNotFoundException {
+    public ArrayList<CommentModel> getComments(PostModel pm) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_comments(?)");
-        ps.setInt(1, cm.getPostId());
+        ps.setInt(1, pm.getPostId());
         return getCommentsArray(ps.executeQuery());
     }
 
@@ -62,11 +64,11 @@ public class CommentDAO {
             cm.setContent(rs.getString("Content"));
             cm.setDate(rs.getDate("DateCreated"));
             cm.setLikeCount(rs.getInt("LikeCount"));
-            cm.setPageId(rs.getInt("PageId"));
             UserModel author = new UserModel();
-            author.setUserId(rs.getInt("UserId"));
+            author.setUserId(rs.getInt("AuthorId"));
             author.setFirstName(rs.getString("FirstName"));
             author.setLastName(rs.getString("LastName"));
+            cm.setAuthor(author);
             cml.add(cm);
         }
         return cml;

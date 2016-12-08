@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/bootstrap.min.css" />
         <script src="${cp}/resources/js/frameworks/jquery-3.1.1.min.js"></script>
         <script src="${cp}/resources/js/frameworks/angular.min.js"></script>
-        
+
         <script src="${cp}/resources/js/user_page.js"></script>
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
@@ -38,9 +38,44 @@
                     <td><p class="text-muted" for="email">Address__</p></td>
                     <td><p id="email" class="text-info">${page.user.street}, ${page.user.city}, ${page.user.state} ${page.user.zipcode}</p></td>
                 </tr>
-                
+
+
+                <div class="panel-group" id="accordion">
+                    <div ng-repeat="post in posts" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                {{post.content}}
+                                <a ng-click="getComments(post.postId)" data-toggle="collapse" data-parent="#accordion"  href="#c_{{$index}}">
+                                    See Comments</a>
+                            </h4>
+                        </div>
+                        <div id="c_{{$index}}" class="panel-collapse collapse">
+                            <div class="panel-body" ng-repeat='comment in post.comments'>{{comment.content}} - {{comment.author.firstName}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='editComment($index)'>Edit</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='deleteComment($index)'>Delete</a>
+                                <div id='edit_{{$index}}' >
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </table>  
-                
+            <table>
+
+                <tr ng-repeat="post in posts">
+                <div>
+                    <td>{{post.author.firstName}} {{post.author.lastName}}</td>
+                    <span>{{post.date}}</span>
+                    <td>{{post.content}}</td>
+                    <td>Likes: {{post.likeCount}}</td>
+                </div>
+                </tr>
+            </table>
+
         </div>
     </body>
 </html>

@@ -9,16 +9,47 @@ app.controller('myCtrl', function ($scope, $http) {
 
     $scope.userId = parseInt($("#userId").val());
     $scope.pageId = parseInt($("#pageId").val());
-    var x = 1+2;
-    //$scope.firstName = $scope.page.user.firstName;
-    //$scope.lastName = $scope.page.user.lastName;
 
 
-//    var x = $http({
-//        method: 'GET',
-//        url: '/ClansWebApp/login',
-//        params: {"email": $scope.email, "password": $scope.password}
-//    });
+    var x = $http({
+        method: 'GET',
+        url: '/ClansWebApp/getPosts',
+        params: {"pageId": $scope.pageId}
+    }).then(function (response) {
+        $scope.posts = response.data;
+        x = 0;
+        while (x < $scope.posts.length) {
+
+            $scope.posts[x]["comments"] = [];
+            x++;
+        }
+        //setTimeout(function(){ $('.collapse').collapse("hide"); }, 1);
+
+
+    }, function errorCallBack(response) {
+        alert("error in get posts");
+    });
+    $scope.index = 0
+    $scope.getComments = function (postId) {
+        x = postId;
+        index = 0;
+        for (; postId !== $scope.posts[index].postId; index++)
+            ;
+
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getComments',
+            params: {"postId": $scope.pageId}
+        }).then(function (response) {
+            $scope.posts[index]["comments"] = response.data
+        }, function errorCallBack(response) {
+            alert("get comments error");
+        });
+
+
+    };
+
+
 
 
 });
