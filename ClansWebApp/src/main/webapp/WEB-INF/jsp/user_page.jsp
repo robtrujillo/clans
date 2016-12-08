@@ -50,9 +50,11 @@
                             </h4>
                         </div>
                         <div id="c_{{$index}}" class="panel-collapse collapse">
-                            <div class="panel-body" ng-repeat='comment in post.comments'>{{comment.content}} - {{comment.author.firstName}}
+                            <p ng-show='post.comments.length===0'>No Comments</p>
+                            <div class="panel-body" ng-repeat='comment in post.comments'>
+                                <p contenteditable="true" ng-model={{comment.content}}>{{comment.content}}</p> - {{comment.author.firstName}}
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editComment($index)'>Edit</a>
+                                <a ng-click='editComment($parent.$index,$index)'>Save Edit</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <a ng-click='deleteComment($index)'>Delete</a>
                                 <div id='edit_{{$index}}' >

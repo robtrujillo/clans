@@ -44,7 +44,7 @@ public class PageController {
         }
         return null;
     }
-    
+
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public @ResponseBody
     ArrayList<CommentModel> getComments(@ModelAttribute("ClansWebApp") PostModel post) {
@@ -55,5 +55,22 @@ public class PageController {
             Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
+    }
+
+    @RequestMapping(value = "/saveComment", method = RequestMethod.GET)
+    public @ResponseBody boolean updateComment(@ModelAttribute("ClansWebApp")  CommentModel comment) {
+        try {
+            if (comment.getContent() == null || comment.getContent().equals("") ) {
+                return true;
+            }
+            else{
+                new CommentDAO().updateComment(comment);
+                return true;
+            }
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
     }
 }
