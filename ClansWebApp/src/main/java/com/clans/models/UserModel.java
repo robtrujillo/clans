@@ -225,4 +225,23 @@ public class UserModel extends Model{
     public void setSex(String sex) {
         this.sex = sex;
     }
+    
+    public boolean hasValues(){
+        if(getCity() != null
+                && getCountry() != null
+                && getEmail() != null
+                && getFirstName() != null
+                && getLastName() != null
+                && getPassword() != null
+                && getPhoneNum() != null
+                && getSex() != null
+                && getSex().length() == 1
+                && getState() != null
+                && getState().length() == 2
+                && getStreet() != null
+                && getZipcode() > 10000){
+            return true;
+        }
+        return false;
+    }
 }
