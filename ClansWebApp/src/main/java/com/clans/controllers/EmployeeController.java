@@ -33,6 +33,9 @@ public class EmployeeController {
         return new ModelAndView("employeeModel", "command", new EmployeeModel());
     }
     
+    
+    
+    
     @RequestMapping(value = "/createAd", method = RequestMethod.GET)
     public @ResponseBody
     boolean updateAd(@ModelAttribute("ClansWebApp") AdModel ad,

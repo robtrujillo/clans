@@ -51,27 +51,27 @@
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>Item Type:</label>
-                                    <input type="text ng-model="itemType" class="form-control">
+                                    <input type="text" ng-model="itemType" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Company:</label>
-                                    <input type="text ng-model="company" class="form-control">
+                                    <input type="text" ng-model="company" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Item Name:</label>
-                                    <input type="text ng-model="itemName" class="form-control">
+                                    <input type="text" ng-model="itemName" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Content:</label>
-                                    <input placeholder="type content here" type="text ng-model="content" class="form-control">
+                                    <input placeholder="type content here" type="text" ng-model="content" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Unit Price:</label>
-                                    <input type="text ng-model="unitPrice" class="form-control">
+                                    <input type="text" ng-model="unitPrice" class="form-control">
                                 </div>
                                  <div class="form-group">
                                     <label>Number Avaliable:</label>
-                                    <input type="text ng-model="numAvaliable" class="form-control">
+                                    <input type="text" ng-model="numAvaliable" class="form-control">
                                 </div>
                             </ul>
                              <a ng-click='updateAd()'>Create Advertisement</a>

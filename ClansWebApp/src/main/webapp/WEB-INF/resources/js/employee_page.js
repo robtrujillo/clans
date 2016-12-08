@@ -8,7 +8,6 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http) {
 
     $scope.userId = parseInt($("#userId").val());
-    
    
     var x = $http({
         method: 'GET',
@@ -33,11 +32,13 @@ app.controller('myCtrl', function ($scope, $http) {
     $scope.changeHello = function (){
         $scope.HELLO = "CHANGED BAM!";
     }
-    $scope.itemName = null;
-    $scope.itemType = null;
-    $scope.company = null;
-    $scope.content = null;
-
+    $scope.itemName = "";
+    $scope.itemType = "";
+    $scope.company = "";
+    $scope.content = "";
+    $scope.unitPrice = 0.0;
+    $scope.numAvaliable = 0;
+    
     $scope.updateAd = function () {
         alert("HI");
         x = $scope.userId;
@@ -53,11 +54,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }, function errorCallBack(response) {
             alert("Update Ad error");
         });
-
-
     };
-
-
 
 
 });
