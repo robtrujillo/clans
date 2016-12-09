@@ -41,16 +41,28 @@
 
 
                 <div class="panel-group" id="accordion">
+                    <input id="np" type="text" class="form-control" placeholder="Type here for new post"></input> 
+                                <a ng-click='addPost($index, post.postId)'>Create Post</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                     <div ng-repeat="post in posts" class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                {{post.content}}
-                                - {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
+                                <input type="text" class="form-control" ng-model="post.content"></input> 
+                                by {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='editPost($index,1)'>Like</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='editPost($index,-1)'>Unlike</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='editPost($index,0)'>Save Edit</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a ng-click='deletePost($index)'>Delete</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                                 <a ng-click="getComments(post.postId)" data-toggle="collapse" data-parent="#accordion"  href="#c_{{$index}}">
-                                    See Comments</a>
+                                    See {{post.commentCount}} Comments</a>
                                 <br/>
                                 <input id="nc_{{$index}}" type="text" class="form-control" placeholder="Type here for new comment"></input> 
-                                <a ng-click='addComment($index)'>Create Comment</a>
+                                <a ng-click='addComment($index, post.postId)'>Create Comment</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </h4>
                         </div>
@@ -58,7 +70,7 @@
                             <p ng-show='post.comments.length===0'>No Comments</p>
                             <div class="panel-body " ng-repeat='comment in post.comments'>
                                 <input type="text" class="form-control" ng-model="comment.content"></input> 
-                                - {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
+                                by {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <a ng-click='editComment($parent.$index,$index,1)'>Like</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;

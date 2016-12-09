@@ -36,7 +36,7 @@ public class PostsDAO {
         ps.executeQuery();
     }
     
-    public boolean removePosts(PostModel pm) throws SQLException, ClassNotFoundException {
+    public boolean deletePosts(PostModel pm) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call delete_post(?)");
         ps.setInt(1, pm.getPostId());
         ps.executeQuery();

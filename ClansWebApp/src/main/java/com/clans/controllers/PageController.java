@@ -56,6 +56,40 @@ public class PageController {
         }
         return null;
     }
+    
+    @RequestMapping(value = "/savePost", method = RequestMethod.GET)
+    public @ResponseBody boolean updatePost(@ModelAttribute("ClansWebApp")  PostModel post) {
+        try {
+            if (post.getContent() == null || post.getContent().equals("") ) {
+                return true;
+            }
+            else{
+                new PostsDAO().updatePosts(post);
+                return true;
+            }
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+    
+    @RequestMapping(value = "/byePost", method = RequestMethod.GET)
+    public @ResponseBody boolean deletePost(@ModelAttribute("ClansWebApp")  PostModel post) {
+        try {
+            if (post.getPostId() <= 0) {
+                return true;
+            }
+            else{
+                new PostsDAO().deletePosts(post);
+                return true;
+            }
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
 
     @RequestMapping(value = "/saveComment", method = RequestMethod.GET)
     public @ResponseBody boolean updateComment(@ModelAttribute("ClansWebApp")  CommentModel comment) {

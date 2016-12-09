@@ -29,6 +29,53 @@ app.controller('myCtrl', function ($scope, $http) {
     }, function errorCallBack(response) {
         alert("error in get posts");
     });
+    
+    $scope.addPost = function(){
+        
+        content = $("#np").val();
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/savePost',
+            params: {"content": content, "pageId":$scope.pageId, "userId":$scope.userId}
+        }).then(function (response) {
+            $(id).value="";
+            x();
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
+    
+    $scope.editPost = function(index, like){
+        postIndex = index;
+        
+        post = $scope.posts[postIndex];
+        likes = like;
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/savePost',
+            params: {"postId":post.postId, "content": post.content, "likeCount":like}
+        }).then(function (response) {
+            $scope.posts[postIndex].likeCount += likes;
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
+    
+    $scope.deletePost = function(index){
+        postIndex = index;
+        post = $scope.posts[postIndex];
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/byePost',
+            params: {"postId":post.postId}
+        }).then(function (response) {
+            $scope.posts.splice(index,1);
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
+    
+    
     $scope.index = 0
     $scope.getComments = function (postId) {
         x = postId;
@@ -47,16 +94,16 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     };
    
-    $scope.addComment = function(postIndex){
+    $scope.addComment = function(postIndex, postId){
         index = postIndex;
         var id = "#nc_" + index
         content = $(id).val();
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/saveComment',
-            params: {"content": content, "userId":$scope.userId}
+            params: {"content": content, "postId":postId, "userId":$scope.userId}
         }).then(function (response) {
-            
+            $(id).value="";
         }, function errorCallBack(response) {
             alert("get comments error\n");
         });
@@ -88,7 +135,7 @@ app.controller('myCtrl', function ($scope, $http) {
             url: '/ClansWebApp/byeComment',
             params: {"commentId":comment.commentId}
         }).then(function (response) {
-            $scope.posts[index]["comments"] = response.data;
+            $scope.posts[index]["comments"].splice(commentIndex,1);
         }, function errorCallBack(response) {
             alert("get comments error\n");
         });
