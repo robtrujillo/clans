@@ -55,7 +55,7 @@ app.controller('myCtrl', function ($scope, $http) {
             $(id).value = "";
             x();
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("add post error\n");
         });
     }
 
@@ -71,7 +71,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             $scope.posts[postIndex].likeCount += likes;
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("save post error\n");
         });
     }
 
@@ -85,7 +85,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             $scope.posts.splice(index, 1);
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("delete post error\n");
         });
     }
 
@@ -119,7 +119,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             $(id).value = "";
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("add comments error\n");
         });
     }
 
@@ -136,7 +136,7 @@ app.controller('myCtrl', function ($scope, $http) {
 
             $scope.posts[postIndex].comments[commentIndex].likeCount += likes;
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("edit comments error\n");
         });
     }
 
@@ -151,7 +151,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             $scope.posts[index]["comments"].splice(commentIndex, 1);
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("delete comment error\n");
         });
     }
 
@@ -165,7 +165,7 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.sent = true;
             //$scope.posts[index]["comments"].splice(commentIndex, 1);
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("send message error\n");
             $scope.sent = false;
         });
     }
@@ -179,7 +179,7 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.convos = response.data;
             //$scope.posts[index]["comments"].splice(commentIndex, 1);
         }, function errorCallBack(response) {
-            alert("get convos error\n");
+            alert("get messages error\n");
         });
     }
     
@@ -208,7 +208,43 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             $scope.convos[convoIndex]["msgs"].splice(messageIndex, 1);
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("delete message error\n");
+        });
+    }
+    
+    $scope.updateGroups = function(){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/saveGroup',
+            params: {"userId": $scope.userId, "groupName": $scope.groupName}
+        }).then(function (response) {
+            
+        }, function errorCallBack(response) {
+            alert("error making group\n");
+        });
+    }
+    
+    $scope.getMyGroups = function(){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getGroups',
+            params: {"userId": $scope.userId}
+        }).then(function (response) {
+            $scope.groups = response.data;
+        }, function errorCallBack(response) {
+            alert("error making group\n");
+        });
+    }
+    
+    $scope.getGroups = function(){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getGroups',
+            params: {"ownerId": $scope.userId, "groupName": $scope.groupName}
+        }).then(function (response) {
+            
+        }, function errorCallBack(response) {
+            alert("error making group\n");
         });
     }
     
@@ -220,7 +256,7 @@ app.controller('myCtrl', function ($scope, $http) {
         }).then(function (response) {
             
         }, function errorCallBack(response) {
-            alert("get comments error\n");
+            alert("sign out error\n");
         });
     }
 
