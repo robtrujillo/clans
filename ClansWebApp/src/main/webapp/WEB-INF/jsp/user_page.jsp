@@ -84,7 +84,14 @@
                         </div>
                     </div>
                 </div>
-            </table>  
+            </table>
+                <div id="messages">
+                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to start making a message!</button>
+                    <select ng-show="names.length > 0" ng-model="receiver.receiver" ng-options='user as getFullName(user) for user in names'>
+                    Select a User to message</select>
+                    <input ng-show="names.length > 0" placeholder="Enter Message Here" type="text" class="form-control" ng-model="messageContent"></input> 
+                    <button ng-show="names.length > 0" ng-click="sendMessage(selectedName)" class="btn btn-facebook">Click to Send</button>
+                </div>
             
 
         </div>

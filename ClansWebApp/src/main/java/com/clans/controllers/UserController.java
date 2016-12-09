@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -109,7 +110,18 @@ public class UserController {
         }
         return "index";
     }
-
+    
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<UserModel> getAllUsers(@ModelAttribute("ClansWebApp") UserModel user) {
+        try {
+            ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
+            return listUsers;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public ModelAndView listUsers(ModelAndView model, @ModelAttribute UserModel user) throws SQLException, IOException {
         try {
             user = new UserModel();
