@@ -18,11 +18,11 @@
         <script src="${cp}/resources/js/frameworks/jquery-3.1.1.min.js"></script>
         <script src="${cp}/resources/js/frameworks/angular.min.js"></script>
 
-        <script src="${cp}/resources/js/employee_page.js"></script>
+        <script src="${cp}/resources/js/manager_page.js"></script>
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
     <body>
-        <h2>MANAGER_PAGE</h2>
+         <h2>MANAGER</h2>
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>
@@ -40,8 +40,142 @@
                     <td><p id="email" class="text-info">${employee.street}, ${employee.city}, ${employee.state} ${employee.zipcode}</p></td>
                 </tr>
 
-                [[HELLO]]
-
+                
+<!--                EDIT EMPLOYEE-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1">Edit Employee</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Employee ID:</label>
+                                    <input type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Update Wage:</label>
+                                    <input type="text" ng-model="company" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Update Manager Status:</label>
+                                    <input placeholder="0 or 1" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                              
+                            </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Update Employee</button>
+                        </div>
+                    </div>
+                </div>
+                
+<!--                ADD EMPLOYEE-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse2">New Employee</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>First Name:</label>
+                                    <input type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name:</label>
+                                    <input type="text" ng-model="company" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Sex:</label>
+                                    <input placeholder="M, F, or O" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email:</label>
+                                    <input placeholder="example@email.com" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password:</label>
+                                    <input type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number:</label>
+                                    <input placeholder="10 Digits, no special characters or spaces" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Street Address:</label>
+                                    <input placeholder="M or F" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>City:</label>
+                                    <input placeholder="City" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Zip Code:</label>
+                                    <input placeholder="5 digit integer" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>State:</label>
+                                    <input placeholder="2 Letter Abbrv. ex. 'NY'" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Country:</label>
+                                    <input placeholder="Country" type="text" ng-model="itemName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Is Employee?:</label>
+                                    <input placeholder="Bool(0,1)" type="text" ng-model="itemName" class="form-control">
+                                </div>
+          
+                            </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Add Employee</button>
+                        </div>
+                    </div>
+                </div>
+<!--                DELETE EMPLOYEE-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse3">DELETE EMPLOYEE</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Employee ID:</label>
+                                    <input type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>DELETE EMPLOYEE</button>
+                        </div>
+                    </div>
+                </div>
+<!--                All Items-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse4">Item Listing</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Employee ID:</label>
+                                    <input type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>DELETE EMPLOYEE</button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </body>
 </html>
