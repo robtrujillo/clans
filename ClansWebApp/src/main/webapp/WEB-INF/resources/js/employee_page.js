@@ -174,6 +174,7 @@ app.controller('myCtrl', function ($scope, $http) {
             params: {"accountId":x}
         }).then(function (response) {
             alert("deleted acount");
+            $scope.getAllAccts2();
         }, function errorCallBack(response) {
             alert("error in delete Account");
         });

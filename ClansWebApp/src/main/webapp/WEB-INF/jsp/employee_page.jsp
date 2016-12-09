@@ -145,13 +145,20 @@
                                     <button ng-show="accountState == 2" ng-click="deleteAccount()"> delete </button>      
                                 </div>
                             </ul>
-                            <a ng-click='updateSales()'>Record Transaction</a>
                         </div>
                     </div>
                 </div>
 
-
-
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="()" data-toggle="collapse" href="#collapse4">Customer Mailing List</a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                  
                 <div>
                     <button ng-click="getAllAds()" class="btn btn-default">Click to get a list of ads to remove</button>
                     <select ng-show="ads.length > 0" ng-model="selectedAd" ng-options='x.itemName for x in ads'>
