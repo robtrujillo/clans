@@ -153,12 +153,37 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a ng-click="()" data-toggle="collapse" href="#collapse4">Customer Mailing List</a>
+                                <a ng-click="getMailingList()"  data-toggle="collapse" href="#collapse4">Customer Mailing List</a>
                             </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse" >
+                            <div ng-repeat="mail in mailingList">
+                                <h4> {{mail.firstName}} {{mail.lastName}} {{mail.street}}  {{mail.city}}  {{mail.zipCode}}  {{mail.state}}  {{mail.country}}     {{mail.email}} </h4>
+                            </div>
                         </div>
                     </div>
                 </div>
-                  
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getNames2()"  data-toggle="collapse" href="#collapse5">Item Suggestion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse" >
+                            <label> Pick user for account:</label>
+                            <select ng-model="user2Select" ng-options='x.firstName for x in names2'>
+                            </select> 
+                            <button ng-click="getSuggestion()"> Get Suggestion</button>
+                            <div ng-repeat="sug in suggestion">
+                                <h4> {{sug.itemName}} </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div>
                     <button ng-click="getAllAds()" class="btn btn-default">Click to get a list of ads to remove</button>
                     <select ng-show="ads.length > 0" ng-model="selectedAd" ng-options='x.itemName for x in ads'>
