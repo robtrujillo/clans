@@ -59,6 +59,7 @@ public class UserController {
             if (loggedUser.isIsEmployee()) {
                 loggedUser = new EmployeesDAO().getEmployeeModelById(loggedUser.getUserId());
                 model.put("employee", loggedUser);
+                session.setAttribute("user_data", loggedUser);
                 if (((EmployeeModel) loggedUser).isIsManager()) {
                     return "manager_page";
                 }
