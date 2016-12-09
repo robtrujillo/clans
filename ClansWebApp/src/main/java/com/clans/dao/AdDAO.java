@@ -58,21 +58,25 @@ public class AdDAO {
         ps.setString(5, am.getCompany());
         return getAdArray(ps.executeQuery());
     }
+    
+     public ArrayList<AdModel> getAllAd() throws SQLException, ClassNotFoundException {
+        PreparedStatement ps = dbs.getPreparedStatement("call get_all_advertisements()");
+        return getAdArray(ps.executeQuery());
+    }
 
     private ArrayList<AdModel> getAdArray(ResultSet rs) throws SQLException {
         ArrayList<AdModel> aml = new ArrayList<AdModel>();
         while (rs.next()) {
             AdModel am = new AdModel();
-            am.setAdId(rs.getInt("AdvertisementId"));
-            am.setItemType(rs.getString("ItemType"));
-            am.setDate(rs.getDate("DateCreated"));
-            am.setCompany(rs.getString("Company"));
-            am.setContent(rs.getString("Content"));
-            am.setUnitPrice(rs.getDouble("UnitPrice"));
-            am.setNumAvailable(rs.getInt("NumAvailable"));
-            //EmployeeModel em = new EmployeeModel();
-            am.setUserId(rs.getInt("EmployeeId"));
-            //am.setEmployee(em);
+            try{ am.setItemName(rs.getString("ItemName")); } catch(Exception e) {}
+            try{ am.setCompany(rs.getString("Company")); } catch(Exception e) {}
+            try{ am.setContent(rs.getString("Content")); } catch(Exception e) {}
+            try{ am.setUnitPrice(rs.getDouble("UnitPrice")); } catch(Exception e) {}
+            try{ am.setNumAvailable(rs.getInt("NumAvailable")); } catch(Exception e) {}
+            try{ am.setUserId(rs.getInt("EmployeeId"));} catch(Exception e) {}             
+            try{ am.setAdId(rs.getInt("AdvertisementId")); } catch(Exception e) {}
+            try{ am.setItemType(rs.getString("ItemType")); } catch(Exception e) {}
+            try{ am.setDate(rs.getDate("DateCreated")); } catch(Exception e) {}
             aml.add(am);
         }
         return aml;

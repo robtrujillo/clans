@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Employee Page</title>
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/bootstrap.min.css" />
@@ -22,7 +22,6 @@
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
     <body>
-         <h2>EMPLOYEE</h2>
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>
@@ -69,14 +68,103 @@
                                     <label>Unit Price:</label>
                                     <input type="text" ng-model="unitPrice" class="form-control">
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Number Avaliable:</label>
                                     <input type="text" ng-model="numAvaliable" class="form-control">
                                 </div>
                             </ul>
-                             <a ng-click='updateAd()'>Create Advertisement</a>
+                            <a ng-click='updateAd()'>Create Advertisement</a>
                         </div>
                     </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getRTList()" data-toggle="collapse" href="#collapse2">Record Transaction</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse" >
+                            <ul class="list-group">
+                                <div>
+                                    <label>Accounts</label>
+                                    <select ng-model="ssAcct" ng-options='x.firstName for x in accts'>
+                                    </select>   
+                                </div>
+                                <div>
+                                    <label>Items</label>
+                                    <select ng-model="ssAd" ng-options='x.itemName for x in ads2'>
+                                    </select>   
+                                </div>
+                                <div class="form-group">
+                                    <label>Number Units</label>
+                                    <input type="text" ng-model="NumUnits" class="form-control">
+                                </div>
+                            </ul>
+                            <a ng-click='updateSales()'>Record Transaction</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse3">Manage Accounts</a>
+                            </h4>                            
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse" >
+                            <ul class="list-group">
+                                <button ng-click="addAcctBtn()"> Add Account </button>
+                                <button ng-click="editAcctBtn()"> Edit Account </button>
+                                <button ng-click="deleteAcctBtn()"> Delete Account </button>
+                                <div>      
+                                    <label ng-show="accountState == 0"> Pick user for account:</label>
+                                    <select ng-show="accountState == 0" ng-model="user2Select" ng-options='x.firstName for x in names2'>
+                                    </select>  
+                                    <div ng-show="accountState == 0" class="form-group">
+                                        <label ng-show="accountState == 0">Credit Card Number</label>
+                                        <input type="text" ng-show="accountState == 0" ng-model="ccNum" class="form-control">
+                                        <button ng-show="accountState == 0" ng-click="updateAccount()"> add </button>
+                                    </div>
+                                    <label ng-show="accountState == 1"> Accounts to edit: </label>
+                                    <select ng-show="accountState == 1" ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
+                                    </select>   
+
+                                    <div ng-show="accountState == 1" class="form-group">
+                                        <label ng-show="accountState == 1">Credit Card Number</label>
+                                        <input type="text" ng-show="accountState == 1" ng-model="ccNum" class="form-control">
+                                        <button ng-show="accountState == 1" ng-click="updateAccount()"> edit </button>
+                                    </div>  
+                                    <div ng-show="accountState == 2" class="form-group">
+                                        <label ng-show="accountState == 2"> Accounts to delete: </label>
+                                        <select ng-show="accountState == 2" ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
+                                        </select>                                                                           
+                                    </div>
+                                    <button ng-show="accountState == 2" ng-click="deleteAccount()"> delete </button>      
+                                </div>
+                            </ul>
+                            <a ng-click='updateSales()'>Record Transaction</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <button ng-click="getAllAds()" class="btn btn-default">Click to get a list of ads to remove</button>
+                    <select ng-show="ads.length > 0" ng-model="selectedAd" ng-options='x.itemName for x in ads'>
+                    </select>      
+                    <button ng-show="ads.length > 0" ng-click="deleteAd()">Delete Ad</button>                             
+                </div> 
+
+
+                <div id="messages">
+                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to send a message</button>
+                    <select ng-show="names.length > 0" ng-model="selectedName" ng-options='x.firstName for x in names'>
+                    </select>                   
+
                 </div>
 
         </div>

@@ -46,6 +46,11 @@ public class AccountsDAO {
         ps.setString(1, adm.getItemName());
         return getAccountArray(ps.executeQuery());
     }
+    
+   public ArrayList<AccountModel> getAllAccounts() throws SQLException, ClassNotFoundException{
+        PreparedStatement ps = dbs.getPreparedStatement("call get_all_accounts()");
+        return getAccountArray(ps.executeQuery());
+    }
 
     private ArrayList<AccountModel> getAccountArray(ResultSet rs) throws SQLException {
         ArrayList<AccountModel> aml = new ArrayList<AccountModel>();
@@ -54,7 +59,7 @@ public class AccountsDAO {
             am.setAccountId(rs.getInt("AccountId"));
             am.setFirstName(rs.getString("FirstName"));
             am.setLastName(rs.getString("LastName"));
-            am.setUserId(rs.getInt("UserId"));
+            am.setUserId(rs.getInt("CustomerId"));
             aml.add(am);
         }
         return aml;
