@@ -53,15 +53,15 @@
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>Employee ID:</label>
-                                    <input type="text" ng-model="itemType" class="form-control">
+                                    <input type="text" ng-model="emplId" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Update Wage:</label>
-                                    <input type="text" ng-model="company" class="form-control">
+                                    <input type="text" ng-model="emplWage" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Update Manager Status:</label>
-                                    <input placeholder="0 or 1" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="0 or 1" type="text" ng-model="isMan" class="form-control">
                                 </div>
                               
                             </ul>
@@ -83,56 +83,56 @@
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>First Name:</label>
-                                    <input type="text" ng-model="itemType" class="form-control">
+                                    <input type="text" ng-model="fname" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name:</label>
-                                    <input type="text" ng-model="company" class="form-control">
+                                    <input type="text" ng-model="lname" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Sex:</label>
-                                    <input placeholder="M, F, or O" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="M, F, or O" type="text" ng-model="sex" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Email:</label>
-                                    <input placeholder="example@email.com" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="example@email.com" type="text" ng-model="email" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Password:</label>
-                                    <input type="text" ng-model="itemName" class="form-control">
+                                    <input type="text" ng-model="pass" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone Number:</label>
-                                    <input placeholder="10 Digits, no special characters or spaces" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="10 Digits, no special characters or spaces" type="text" ng-model="pNum" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Street Address:</label>
-                                    <input placeholder="M or F" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="M or F" type="text" ng-model="sAdd" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>City:</label>
-                                    <input placeholder="City" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="City" type="text" ng-model="city" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Zip Code:</label>
-                                    <input placeholder="5 digit integer" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="5 digit integer" type="zip" ng-model="itemName" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>State:</label>
-                                    <input placeholder="2 Letter Abbrv. ex. 'NY'" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="2 Letter Abbrv. ex. 'NY'" type="text" ng-model="state" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Country:</label>
-                                    <input placeholder="Country" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="Country" type="text" ng-model="country" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Is Employee?:</label>
-                                    <input placeholder="Bool(0,1)" type="text" ng-model="itemName" class="form-control">
+                                    <input placeholder="Bool(0,1)" type="text" ng-model="isEmpl" class="form-control">
                                 </div>
           
                             </ul>
                             
-                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Add Employee</button>
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateUser()'>Add Employee</button>
                         </div>
                     </div>
                 </div>
@@ -148,11 +148,11 @@
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>Employee ID:</label>
-                                    <input type="text" ng-model="itemType" class="form-control">
+                                    <input type="text" ng-model="emplId" class="form-control">
                                 </div>
                                 </ul>
                             
-                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>DELETE EMPLOYEE</button>
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='deleteEmployee()'>DELETE EMPLOYEE</button>
                         </div>
                     </div>
                 </div>
@@ -168,14 +168,78 @@
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>Employee ID:</label>
-                                    <input type="text" ng-model="itemType" class="form-control">
+                                    <input type="text" ng-model="emplId" class="form-control">
                                 </div>
                                 </ul>
                             
-                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>DELETE EMPLOYEE</button>
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='getAdvertisement()'>DELETE EMPLOYEE</button>
                         </div>
                     </div>
                 </div>
+
+<!--                TRANSACTIONS-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse5">Transactions</a>
+                            </h4>
+                        </div>
+                            <ul class="list-group">
+                        <div id="collapse5" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                    <label>Search By Item Name:</label>
+                                    <input placeholder = "Item Name" type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+                            
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Search By User Name:</label>
+                                    <input placeholder = "User Name" type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+                                
+                        </div>
+                    </div>
+                </div>
+                        
+<!--                Revenue-->
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse6">Revenue</a>
+                            </h4>
+                        </div>
+                        <div id="collapse6" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Search By Item Name:</label>
+                                    <input placeholder = "Item Name" type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+                            
+                            <ul class="list-group">
+                                <div class="form-group">
+                                    <label>Search By Item Type:</label>
+                                    <input placeholder = "Item Type" type="text" ng-model="itemType" class="form-control">
+                                </div>
+                                </ul>
+                            
+                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+                                
+                        </div>
+                    </div>
+                </div>
+
+
         </div>
     </body>
 </html>

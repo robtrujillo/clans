@@ -45,10 +45,10 @@ public class GroupDAO {
         return true;
     }
 
-    public ArrayList<GroupModel> getGroup(GroupModel gm) throws SQLException, ClassNotFoundException {
-        PreparedStatement ps = dbs.getPreparedStatement("call get_group(?,?)");
+    public ArrayList<GroupModel> getGroups(GroupModel gm) throws SQLException, ClassNotFoundException {
+        PreparedStatement ps = dbs.getPreparedStatement("call get_group(?)");
         ps.setInt(1, gm.getUserId());
-        ps.setString(2, gm.getGroupName());
+        //ps.setString(2, gm.getGroupName());
         return getGroupArray(ps.executeQuery());
     }
 
