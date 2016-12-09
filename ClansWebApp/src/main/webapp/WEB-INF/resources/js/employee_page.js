@@ -8,8 +8,7 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http) {
 
     $scope.userId = parseInt($("#userId").val());
-
-
+   
     var x = $http({
         method: 'GET',
         url: '/ClansWebApp/getPosts',
@@ -29,26 +28,33 @@ app.controller('myCtrl', function ($scope, $http) {
         alert("error in get posts");
     });
     $scope.index = 0
-    $scope.getComments = function (postId) {
-        x = postId;
-        index = 0;
-        for (; postId !== $scope.posts[index].postId; index++)
-            ;
-
+    
+    $scope.changeHello = function (){
+        $scope.HELLO = "CHANGED BAM!";
+    }
+    $scope.itemName = "";
+    $scope.itemType = "";
+    $scope.company = "";
+    $scope.content = "";
+    $scope.unitPrice = 0.0;
+    $scope.numAvaliable = 0;
+    
+    $scope.updateAd = function () {
+        alert("HI");
+        x = $scope.userId;
         var y = $http({
             method: 'GET',
-            url: '/ClansWebApp/getComments',
-            params: {"postId": $scope.pageId}
+            url: '/ClansWebApp/createAd',
+            params: {"itemType": $scope.itemType, "itemName": $scope.itemName, 
+                "company":$scope.company, "content":$scope.content, 
+                "unitPrice":parseFloat($scope.unitPrice), "numAvailable":parseInt($scope.numAvaliable), 
+                "userId":x}
         }).then(function (response) {
-            $scope.posts[index]["comments"] = response.data
+            alert("Added New Ad");
         }, function errorCallBack(response) {
-            alert("get comments error");
+            alert("Update Ad error");
         });
-
-
     };
-
-
 
 
 });
