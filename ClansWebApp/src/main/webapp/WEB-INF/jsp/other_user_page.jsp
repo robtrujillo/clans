@@ -17,7 +17,7 @@
         <script src="${cp}/resources/js/frameworks/jquery-3.1.1.min.js"></script>
         <script src="${cp}/resources/js/frameworks/angular.min.js"></script>
 
-        <script src="${cp}/resources/js/user_page.js"></script>
+        <script src="${cp}/resources/js/other_user_page.js"></script>
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/page-wrapper.css" />
     </head>
@@ -26,11 +26,18 @@
             <div ng-app="myApp" ng-controller="myCtrl">
                 <input type="hidden" id="userId" value='${page.user.userId}'/>
                 <input type="hidden" id="pageId" value='${page.pageId}'/>
+                <input type="hidden" id="id_user" value='${page.group.userId}'/>
                 <h1>${page.user.firstName} ${page.user.lastName}</h1>
 
                 <form:form method="GET" commandName="user" action="/ClansWebApp/logout">
 
                     <button class="btn btn-signout btn-warning" type="submit">Sign Out</button>  
+                </form:form>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <select ng-change="sessionVar()" ng-model="otherUser.user" ng-options='user as getFullName(user) for user in names'>
+                        Select a User</select>
+                     <form:form method="GET" commandName="user" action="/ClansWebApp/switchUserPage">
+                    <button id="leaveBtn" class="btn btn-signout btn-warning" type="submit">Go to their page!</button>  
                 </form:form>
                 <table>
                     <tr>
@@ -54,17 +61,14 @@
                         <div ng-repeat="post in posts" class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <input type="text" class="form-control" ng-model="post.content"></input> 
+                                    <input readonly type="text" class="form-control" ng-model="post.content"></input> 
                                     by {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editPost($index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editPost($index, -1)'>Unlike</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a ng-click='editPost($index, 0)'>Save Edit</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a ng-click='deletePost($index)'>Delete</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    
                                     <a ng-click="getComments(post.postId)" data-toggle="collapse" data-parent="#accordion"  href="#c_{{$index}}">
                                         See {{post.commentCount}} Comments</a>
                                     <br/>
@@ -76,82 +80,22 @@
                             <div id="c_{{$index}}" class="panel-collapse collapse ">
                                 <p ng-show='post.comments.length === 0'>No Comments</p>
                                 <div class="panel-body " ng-repeat='comment in post.comments'>
-                                    <input type="text" class="form-control" ng-model="comment.content"></input> 
+                                    <input readonly type="text" class="form-control" ng-model="comment.content"></input> 
                                     by {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editComment($parent.$index, $index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editComment($parent.$index, $index, -1)'>Unlike</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a ng-click='editComment($parent.$index, $index, 0)'>Save Edit</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a ng-click='deleteComment($parent.$index, $index)'>Delete</a>
+                                    
 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </table>
-                <div id="send_msg">
-                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to start making a message!</button>
-                    <select ng-show="names.length > 0" ng-model="receiver.receiver" ng-options='user as getFullName(user) for user in names'>
-                        Select a User to message</select>
-                    <input ng-show="names.length > 0" placeholder="Enter Subject for Message Here" type="text" class="form-control" ng-model="subjectContent"></input> 
-                    <input ng-show="names.length > 0" placeholder="Enter Message Here" type="text" class="form-control" ng-model="messageContent"></input> 
-                    <span><button ng-show="names.length > 0" ng-click="sendMessage(messageContent, subjectContent)" class="btn btn-facebook">Click to Send</button>
-                        <label ng-show="sent">Sent!</label></span>
-                </div>
+                
                 <br/>
-                <div check_msg>
-
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a ng-click='getConvos()' data-toggle="collapse" href="#collapse1">Click me to see who you've been messaging!</a>
-                                </h4>
-                            </div>
-                            <div id="collapse1" class="panel-collapse collapse">
-                                <ul class="list-group">
-                                    <li ng-repeat='convo in convos' class="list-group-item">
-                                        <div  class="panel-group">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a ng-click='getMessages(convo.userId, $index)' data-toggle="collapse" href="#ms_{{$index}}">Messages with {{convo.firstName}} {{convo.lastName}}</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="ms_{{$index}}" class="panel-collapse collapse">
-                                                    <ul class="list-group">
-                                                        <li ng-repeat='msg in convo.msgs' class="list-group-item">
-                                                            <label>{{msg.subject}}</label>
-                                                            {{msg.content}} -by {{msg.senderFName}} {{msg.senderLName}}
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <a ng-click='deleteMessage($parent.$index, $index)'>Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <button class="btn btn-default" data-toggle="collapse" data-target="#mk_grp">Click Me to Look at Group Stuff</button>
-                <div id="mk_grp" class="collapse">
-
-                    <input ng-model="groupName" type="text" class="form-control" placeholder="What is the name of your new group?"></input> 
-                    <button class="btn btn-default" ng-click="updateGroups()">Create New Group!</button>
-                    <button ng-click="getMyGroups()"class="btn btn-default" data-toggle="collapse" data-target="#my_grps">Click Me to Look at Groups You are a Member of!</button>
-                    <ul  class="collapse" id="my_grps">
-                        <li ng-show="!(groups.length > 0)">Not a member of any groups</li>
-                        <li ng-repeat="group in groups">{{ group.groupName }}</li>
-                    </ul>
-                </div>
+               
             </div>
         </div>
     </body>

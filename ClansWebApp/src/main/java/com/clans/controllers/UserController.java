@@ -9,6 +9,7 @@ import com.clans.dao.EmployeesDAO;
 import com.clans.dao.PagesDAO;
 import com.clans.dao.UsersDAO;
 import com.clans.models.EmployeeModel;
+import com.clans.models.GroupModel;
 import com.clans.models.PageModel;
 import com.clans.models.UserModel;
 import java.io.IOException;
@@ -149,6 +150,47 @@ public class UserController {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    @RequestMapping(value = "/sessionVar", method = RequestMethod.GET)
+    public @ResponseBody boolean sessionVar(@ModelAttribute("ClansWebApp") UserModel user,
+            ModelMap model, HttpSession session) {
+        try {
+            
+                session.setAttribute("other_user", user);
+                return true;
+
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    @RequestMapping(value = "/switchUserPage", method = RequestMethod.GET)
+    public String switchPage(@ModelAttribute("ClansWebApp") UserModel user, ModelMap model, HttpSession session) {
+        try {
+            UserModel me = (UserModel)session.getAttribute("user_data");
+            UserModel other = (UserModel)session.getAttribute("other_user");
+            /* CHECK IF SWITCHING TO OWN PAGE */
+            if(me.getUserId()==other.getUserId()){
+                model.put("user", me);
+                PageModel userPage = new PagesDAO().getUserPage(me);
+                model.put("page", userPage);
+                return "user_page";
+            }
+            else{
+                /* GOING TO OTHER USER'S PAGE */
+                PageModel userPage = new PagesDAO().getUserPage(other);
+                userPage.setGroup(new GroupModel());
+                userPage.getGroup().setUserId(me.getUserId());
+                model.put("page", userPage);
+                return "other_user_page";
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return "index";
     }
 
     public ModelAndView listUsers(ModelAndView model, @ModelAttribute UserModel user) throws SQLException, IOException {

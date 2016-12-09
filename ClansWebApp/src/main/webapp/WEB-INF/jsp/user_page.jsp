@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<c:set var="id_user" value="${session.getAttribute('user_data')}" scope="session" />
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,8 +31,13 @@
                 <h1>${page.user.firstName} ${page.user.lastName}</h1>
 
                 <form:form method="GET" commandName="user" action="/ClansWebApp/logout">
-
                     <button class="btn btn-signout btn-warning" type="submit">Sign Out</button>  
+                </form:form>
+                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <select ng-change="sessionVar()" ng-model="otherUser.user" ng-options='user as getFullName(user) for user in names'>
+                        Select a Users</select>
+                     <form:form method="GET" commandName="user" action="/ClansWebApp/switchUserPage">
+                    <button id="leaveBtn" class="btn btn-signout btn-warning" type="submit">Go to their page!</button>  
                 </form:form>
                 <table>
                     <tr>

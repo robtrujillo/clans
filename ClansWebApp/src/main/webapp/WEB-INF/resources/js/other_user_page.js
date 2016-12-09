@@ -9,7 +9,9 @@ app.controller('myCtrl', function ($scope, $http) {
 
     $scope.userId = parseInt($("#userId").val());
     $scope.pageId = parseInt($("#pageId").val());
-   
+     /* id of logged in user */
+      $scope.id_user = parseInt($("#id_user").val());
+     
 
     $scope.names = [];
     $scope.getNames = function () {
@@ -31,21 +33,20 @@ app.controller('myCtrl', function ($scope, $http) {
         return user.firstName + ' ' + user.lastName;
     };
     $scope.getNames();
-
     $scope.sessionVar = function () {
-        
         var temp = $scope.otherUser.user;
         var x = $http({
             method: 'GET',
             url: '/ClansWebApp/sessionVar',
             params: {"userId": temp.userId}
         }).then(function (response) {
-            //alert("success?");
+            alert($scope.id_user);
         }
         , function errorCallBack(response) {
             alert("error in get posts");
         });
     }
+    
     var x = $http({
         method: 'GET',
         url: '/ClansWebApp/getPosts',
@@ -68,7 +69,7 @@ app.controller('myCtrl', function ($scope, $http) {
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/savePost',
-            params: {"content": content, "pageId": $scope.pageId, "userId": $scope.userId}
+            params: {"content": content, "pageId": $scope.pageId, "userId": $scope.id_user}
         }).then(function (response) {
             $(id).value = "";
             x();
@@ -133,7 +134,7 @@ app.controller('myCtrl', function ($scope, $http) {
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/saveComment',
-            params: {"content": content, "postId": postId, "userId": $scope.userId}
+            params: {"content": content, "postId": postId, "userId": $scope.id_user}
         }).then(function (response) {
             $(id).value = "";
         }, function errorCallBack(response) {
@@ -174,11 +175,11 @@ app.controller('myCtrl', function ($scope, $http) {
     }
 
     $scope.sent = false;
-    $scope.sendMessage = function (msg, sbj) {
+    $scope.sendMessage = function(msg, sbj){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/saveMessage',
-            params: {"senderId": $scope.userId, "receiverId": $scope.receiver.receiver.userId, "content": msg, "subject": sbj}
+            params: {"senderId": $scope.userId, "receiverId":$scope.receiver.receiver.userId, "content":msg, "subject":sbj}
         }).then(function (response) {
             $scope.sent = true;
             //$scope.posts[index]["comments"].splice(commentIndex, 1);
@@ -187,8 +188,8 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.sent = false;
         });
     }
-
-    $scope.getConvos = function () {
+    
+    $scope.getConvos = function(){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/getMessages',
@@ -200,21 +201,21 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("get messages error\n");
         });
     }
-
-    $scope.getMessages = function (otherId, index) {
+    
+    $scope.getMessages = function(otherId, index){
         i = index;
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/getConvos',
-            params: {"senderId": $scope.userId, "receiverId": otherId}
+            params: {"senderId": $scope.userId, "receiverId":otherId}
         }).then(function (response) {
             $scope.convos[i]["msgs"] = response.data;
-
+            
         }, function errorCallBack(response) {
             alert("get convos error\n");
         });
     }
-
+    
     $scope.deleteMessage = function (i1, i2) {
         convoIndex = i1;
         messageIndex = i2;
@@ -229,20 +230,20 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("delete message error\n");
         });
     }
-
-    $scope.updateGroups = function () {
+    
+    $scope.updateGroups = function(){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/saveGroup',
             params: {"userId": $scope.userId, "groupName": $scope.groupName}
         }).then(function (response) {
-
+            
         }, function errorCallBack(response) {
             alert("error making group\n");
         });
     }
-
-    $scope.getMyGroups = function () {
+    
+    $scope.getMyGroups = function(){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/getGroups',
@@ -253,26 +254,26 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("error making group\n");
         });
     }
-
-    $scope.getGroups = function () {
+    
+    $scope.getGroups = function(){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/getGroups',
             params: {"ownerId": $scope.userId, "groupName": $scope.groupName}
         }).then(function (response) {
-
+            
         }, function errorCallBack(response) {
             alert("error making group\n");
         });
     }
-
-    $scope.signout = function () {
+    
+    $scope.signout = function(){
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/signout',
             params: {"userId": $scope.userId, "signedIn": false}
         }).then(function (response) {
-
+            
         }, function errorCallBack(response) {
             alert("sign out error\n");
         });
