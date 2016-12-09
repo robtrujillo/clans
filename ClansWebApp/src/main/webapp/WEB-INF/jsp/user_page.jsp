@@ -84,7 +84,14 @@
                         </div>
                     </div>
                 </div>
-            </table>  
+            </table>
+                <div id="messages">
+                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to send a message</button>
+                    <select ng-show="names.length > 0" ng-model="selectedName" ng-options='x.firstName for x in names'>
+                    </select>
+                    
+                    
+                </div>
             
 
         </div>
