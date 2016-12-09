@@ -219,19 +219,58 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("error in get posts");
         });
     };
-    
+
     $scope.suggestion = [];
     $scope.getSuggestion = function () {
-      $http({
+        $http({
             method: 'GET',
             url: '/ClansWebApp/getSuggestion',
-            params: {accountId:$scope.user2Select.accountId}
+            params: {accountId: $scope.acct2Select.accountId}
         }).then(function (response) {
             $scope.suggestion = response.data;
         }, function errorCallBack(response) {
             alert("error in get suggestions");
-        });  
+        });
     };
+
+    $scope.groups = [];
+    $scope.getGroup = function () {
+        $http({
+            method: 'GET',
+            url: '/ClansWebApp/getGroups',
+            params: {userId: $scope.acct2Select.userId}
+        }).then(function (response) {
+            $scope.groups = response.data;
+        }, function errorCallBack(response) {
+            alert("error in get groups");
+        });
+    };
+
+    $scope.BSIList = [];
+    $scope.getBSI = function () {
+        $http({
+            method: 'GET',
+            url: '/ClansWebApp/getBSI',
+            params: {}
+        }).then(function (response) {
+            $scope.BSIList = response.data;
+        }, function errorCallBack(response) {
+            alert("error in get Best Selling item");
+        });
+    }
+    
+    $scope.histories = [];
+    $scope.getHistory = function () {
+        $http({
+            method: 'GET',
+            url: '/ClansWebApp/getHistory',
+            params: {accountId: $scope.acct2Select.accountId}
+        }).then(function (response) {
+            $scope.histories = response.data;
+        }, function errorCallBack(response) {
+            alert("error in get Best Selling item");
+        });
+    }
 });
 
 

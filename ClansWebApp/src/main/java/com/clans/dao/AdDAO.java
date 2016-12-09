@@ -75,6 +75,11 @@ public class AdDAO {
         return getAdArray(ps.executeQuery());
     }
 
+    public ArrayList<AdModel> getBSI() throws SQLException, ClassNotFoundException {
+        PreparedStatement ps = dbs.getPreparedStatement("call best_selling_items()");
+        return getAdArray(ps.executeQuery());
+    }
+    
     private ArrayList<AdModel> getAdArray(ResultSet rs) throws SQLException {
         ArrayList<AdModel> aml = new ArrayList<AdModel>();
         while (rs.next()) {

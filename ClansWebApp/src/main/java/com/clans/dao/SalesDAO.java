@@ -47,11 +47,11 @@ public class SalesDAO {
         return true;
     }
 
-    public ArrayList<SaleModel> getSales(SaleModel sm, EmployeeModel em, Date startDate, Date endDate) throws SQLException, ClassNotFoundException {
+    public ArrayList<SaleModel> getSales(SaleModel sm, Date startDate, Date endDate) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_sales(?,?,?,?,?,?)");
         ps.setInt(1, sm.getSaleId());
         ps.setInt(2, sm.getAccountId());
-        ps.setInt(3, em.getUserId());
+        ps.setInt(3, sm.getUserId());
         ps.setString(4, sm.getItemName());
         ps.setDate(5, startDate);
         ps.setDate(6, endDate);
@@ -74,6 +74,8 @@ public class SalesDAO {
             //UserModel um = new UserModel();
             sm.setFirstName(rs.getString("FirstName"));
             sm.setLastName(rs.getString("LastName"));
+            sm.setItemName(rs.getString("ItemName"));
+            sm.setItemType(rs.getString("ItemType"));
             //ModelList ml = new ModelList();
             ml.add(sm);
             //ml.add(um);            

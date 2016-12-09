@@ -33,19 +33,16 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class EmployeeController {
-    
+
     @RequestMapping(value = "/employeeModel", method = RequestMethod.GET)
     public ModelAndView employeeModel() {
         return new ModelAndView("employeeModel", "command", new EmployeeModel());
     }
-    
-    
-    
-    
+
     @RequestMapping(value = "/createAd", method = RequestMethod.GET)
     public @ResponseBody
     boolean updateAd(@ModelAttribute("ClansWebApp") AdModel ad,
-            ModelMap model) {        
+            ModelMap model) {
         try {
             if (ad.getContent() == null || ad.getContent().equals("")) {
                 return true;
@@ -53,41 +50,41 @@ public class EmployeeController {
                 new AdDAO().updateAdvertisements(ad);
                 return true;
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
         }
         return false;
     }
-    
-     @RequestMapping(value = "/createSales", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/createSales", method = RequestMethod.GET)
     public @ResponseBody
     boolean updateAd(@ModelAttribute("ClansWebApp") SaleModel sm,
-            ModelMap model) {        
+            ModelMap model) {
         try {
             new SalesDAO().updateSales(sm);
-            return true;            
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
         }
         return false;
     }
-    
-     @RequestMapping(value = "/changeAccount", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/changeAccount", method = RequestMethod.GET)
     public @ResponseBody
-    boolean changeAccount(@ModelAttribute("ClansWebApp") AccountModel am) {        
+    boolean changeAccount(@ModelAttribute("ClansWebApp") AccountModel am) {
         try {
             new AccountsDAO().updateAccounts(am);
-            return true;            
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, e);
         }
         return false;
     }
-    
+
     @RequestMapping(value = "/deleteAccount", method = RequestMethod.GET)
     public @ResponseBody
-    boolean deleteAccount(@ModelAttribute("ClansWebApp") AccountModel am) {        
+    boolean deleteAccount(@ModelAttribute("ClansWebApp") AccountModel am) {
         try {
             new AccountsDAO().deleteAccount(am);
             return true;
@@ -96,13 +93,10 @@ public class EmployeeController {
         }
         return false;
     }
-    
-    
-    
-    
+
     @RequestMapping(value = "/byeAd", method = RequestMethod.GET)
     public @ResponseBody
-    boolean deleteAd(@ModelAttribute("ClansWebApp") AdModel ad) {        
+    boolean deleteAd(@ModelAttribute("ClansWebApp") AdModel ad) {
         try {
             new AdDAO().deleteAdvertisements(ad);
         } catch (SQLException | ClassNotFoundException e) {
@@ -111,30 +105,43 @@ public class EmployeeController {
         }
         return true;
     }
-    
+
     @RequestMapping(value = "/getMailingList", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<UserModel> getMailingList() {
-        try {            
+    public @ResponseBody
+    ArrayList<UserModel> getMailingList() {
+        try {
             return new EmployeesDAO().getMailingList();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     @RequestMapping(value = "/getSuggestion", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<AdModel> getSuggestion(@ModelAttribute("ClansWebApp") AccountModel acm) {
-        try {            
+    public @ResponseBody
+    ArrayList<AdModel> getSuggestion(@ModelAttribute("ClansWebApp") AccountModel acm) {
+        try {
             return new AdDAO().getSuggestion(acm);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+    @RequestMapping(value = "/getHistory", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<SaleModel> getHistory(@ModelAttribute("ClansWebApp") SaleModel sm) {
+        try {
+            return new SalesDAO().getSales(sm, null, null);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
-    
+
     @RequestMapping(value = "/getAllAds", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<AdModel> getAllAds() {
+    public @ResponseBody
+    ArrayList<AdModel> getAllAds() {
         try {
             ArrayList<AdModel> allAds = new AdDAO().getAllAd();
             return allAds;
@@ -143,12 +150,26 @@ public class EmployeeController {
         }
         return null;
     }
-    
-    
+
     @RequestMapping(value = "/getAllAcct", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<AccountModel> getAllAcct() {
+    public @ResponseBody
+    ArrayList<AccountModel> getAllAcct() {
         try {
             ArrayList<AccountModel> allAcc = new AccountsDAO().getAllAccounts();
+            return allAcc;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+            
+    @RequestMapping(value = "/getBSI", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<AdModel> getBSI() {
+        try {
+            ArrayList<AdModel> allAcc = new AdDAO().getBSI();
             return allAcc;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);

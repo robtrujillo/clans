@@ -22,6 +22,7 @@ public class UsersDAO {
     public UsersDAO() throws SQLException, ClassNotFoundException {
         dbs = DBSingleton.getSingleton();
     }
+    
 
     public void updateUser(UserModel user) throws SQLException, ClassNotFoundException {
         /*Prepare SQL statement*/
@@ -38,7 +39,7 @@ public class UsersDAO {
         ps.setInt(10, user.getZipcode());
         ps.setString(11, user.getState());
         ps.setString(12, user.getCountry());
-        ps.setBoolean(13, false);
+        ps.setBoolean(13, user.isIsEmployee());
         ps.setBoolean(14, user.isSignedIn());
         ps.setInt(15, 0);
         ps.setInt(16, 0);

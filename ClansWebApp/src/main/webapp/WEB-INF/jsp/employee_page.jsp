@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<c:set var="id_user" value="${session.getAttribute('user_data')}" scope="session" />
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,10 @@
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>
+            <form:form method="GET" commandName="user" action="/ClansWebApp/logout">
+                <button class="btn btn-signout btn-warning" type="submit">Sign Out</button>  
+            </form:form>
+
             <table>
                 <tr>
                     <td><p class="text-muted" for="email">Email__</p></td>
@@ -74,6 +79,23 @@
                                 </div>
                             </ul>
                             <a ng-click='updateAd()'>Create Advertisement</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getAllAds()"  data-toggle="collapse" href="#collapse7">Remove Advertisement</a>
+                            </h4>
+                        </div>
+                        <div id="collapse7" class="panel-collapse collapse" >
+                            <label>Pick Ad To Remove:</label>
+                            <select ng-show="ads.length > 0" ng-model="selectedAd" ng-options='x.itemName for x in ads'>
+                            </select>      
+                            <button ng-show="ads.length > 0" ng-click="deleteAd()">Delete Advertisement</button>   
                         </div>
                     </div>
                 </div>
@@ -168,12 +190,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a ng-click="getNames2()"  data-toggle="collapse" href="#collapse5">Item Suggestion</a>
+                                <a ng-click="getAllAccts2()"  data-toggle="collapse" href="#collapse5">Item Suggestion</a>
                             </h4>
                         </div>
                         <div id="collapse5" class="panel-collapse collapse" >
-                            <label> Pick user for account:</label>
-                            <select ng-model="user2Select" ng-options='x.firstName for x in names2'>
+                            <label>Pick account:</label>
+                            <select ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
                             </select> 
                             <button ng-click="getSuggestion()"> Get Suggestion</button>
                             <div ng-repeat="sug in suggestion">
@@ -183,20 +205,57 @@
                     </div>
                 </div>
 
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getAllAccts2()"  data-toggle="collapse" href="#collapse6">Get Customer Groups</a>
+                            </h4>
+                        </div>
+                        <div id="collapse6" class="panel-collapse collapse" >
+                            <label>Pick Customer:</label>
+                            <select ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
+                            </select> 
+                            <button ng-click="getGroup()"> Get Group </button>
+                            <div ng-repeat="group in groups">
+                                <h4> {{group.groupName}} </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div>
-                    <button ng-click="getAllAds()" class="btn btn-default">Click to get a list of ads to remove</button>
-                    <select ng-show="ads.length > 0" ng-model="selectedAd" ng-options='x.itemName for x in ads'>
-                    </select>      
-                    <button ng-show="ads.length > 0" ng-click="deleteAd()">Delete Ad</button>                             
-                </div> 
+                  <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getAllAccts2()"  data-toggle="collapse" href="#collapse10">Get Customer History</a>
+                            </h4>
+                        </div>
+                        <div id="collapse10" class="panel-collapse collapse" >
+                            <label>Pick Customer:</label>
+                            <select ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
+                            </select> 
+                            <button ng-click="getHistory()"> Get History </button>
+                            <div ng-repeat="history in histories">  
+                                <h4> {{history.date}} {{history.itemName}}  </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
-                <div id="messages">
-                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to send a message</button>
-                    <select ng-show="names.length > 0" ng-model="selectedName" ng-options='x.firstName for x in names'>
-                    </select>                   
-
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click="getBSI()"  data-toggle="collapse" href="#collapse8">Best Seller List of Items</a>
+                            </h4>
+                        </div>
+                        <div id="collapse8" class="panel-collapse collapse" >                          
+                            <div ng-repeat="item in BSIList">
+                                <h4> {{item.itemName}} {{item.company}} </h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
         </div>
