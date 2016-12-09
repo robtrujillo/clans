@@ -7,9 +7,16 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http) {
 
-    $scope.userId = parseInt($("#userId").val());
+    /* id of page */
     $scope.pageId = parseInt($("#pageId").val());
-   
+    
+    /* id of logged in user */
+    $scope.userId = parseInt($("#userId").val());
+    /* id of group */
+    $scope.groupId = parseInt($("#groupId").val());
+    /* id of owner of group - has admin priviledge */
+    $scope.ownerId = parseInt($("#ownerId").val());
+
 
     $scope.names = [];
     $scope.getNames = function () {
@@ -31,50 +38,20 @@ app.controller('myCtrl', function ($scope, $http) {
         return user.firstName + ' ' + user.lastName;
     };
     $scope.getNames();
-
     $scope.sessionVar = function () {
-        
         var temp = $scope.otherUser.user;
         var x = $http({
             method: 'GET',
             url: '/ClansWebApp/sessionVar',
             params: {"userId": temp.userId}
         }).then(function (response) {
-            //alert("success?");
+            //alert($scope.id_user);
         }
         , function errorCallBack(response) {
             alert("error in get posts");
         });
     }
-    
-    $scope.getGroups = function () {
-        var y = $http({
-            method: 'GET',
-            url: '/ClansWebApp/getGroups',
-            params: {"userId": 0}
-        }).then(function (response) {
-            $scope.groups = response.data;
-        }, function errorCallBack(response) {
-            alert("error making group\n");
-        });
-    }
-    $scope.getGroups();
-    
-    $scope.sessionGroupVar = function () {
-        
-        var temp = $scope.selectedGroup;
-        var x = $http({
-            method: 'GET',
-            url: '/ClansWebApp/sessionGroupVar',
-            params: {"groupId": temp.groupId}
-        }).then(function (response) {
-            //alert("success?");
-        }
-        , function errorCallBack(response) {
-            alert("error in get posts");
-        });
-    }
-    
+
     var x = $http({
         method: 'GET',
         url: '/ClansWebApp/getPosts',
@@ -88,7 +65,7 @@ app.controller('myCtrl', function ($scope, $http) {
             x++;
         }
     }, function errorCallBack(response) {
-        alert("error in get posts");
+        alert("error in get posts " + $scope.pageId);
     });
 
     $scope.addPost = function () {
@@ -263,7 +240,7 @@ app.controller('myCtrl', function ($scope, $http) {
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/saveGroup',
-            params: {"userId": $scope.userId, "groupName": $scope.groupName}
+            params: {"userId": $scope.userId, "groupName": $scope.groupName, "groupId":$scope.groupId}
         }).then(function (response) {
 
         }, function errorCallBack(response) {
@@ -283,7 +260,17 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     }
 
-    
+    $scope.getGroups = function () {
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getGroups',
+            params: {"ownerId": $scope.userId, "groupName": $scope.groupName}
+        }).then(function (response) {
+
+        }, function errorCallBack(response) {
+            alert("error making group\n");
+        });
+    }
 
     $scope.signout = function () {
         var y = $http({

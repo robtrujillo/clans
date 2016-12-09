@@ -84,7 +84,7 @@ public class UserController {
         try {
 
             /* UPDATE USER AND RETURN TO LOGIN PAGE */
-            UserModel loggedOutUser = (UserModel)session.getAttribute("user_data");
+            UserModel loggedOutUser = (UserModel) session.getAttribute("user_data");
             loggedOutUser.setSignedIn(false);
             new UsersDAO().updateUser(loggedOutUser);
             model.put("user", user);
@@ -151,34 +151,49 @@ public class UserController {
         }
         return null;
     }
-    
+
     @RequestMapping(value = "/sessionVar", method = RequestMethod.GET)
-    public @ResponseBody boolean sessionVar(@ModelAttribute("ClansWebApp") UserModel user,
+    public @ResponseBody
+    boolean sessionVar(@ModelAttribute("ClansWebApp") UserModel user,
             ModelMap model, HttpSession session) {
         try {
-            
-                session.setAttribute("other_user", user);
-                return true;
+
+            session.setAttribute("other_user", user);
+            return true;
 
         } catch (Exception ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    @RequestMapping(value = "/switchUserPage", method = RequestMethod.GET)
-    public String switchPage(@ModelAttribute("ClansWebApp") UserModel user, ModelMap model, HttpSession session) {
+
+    @RequestMapping(value = "/sessionGroupVar", method = RequestMethod.GET)
+    public @ResponseBody
+    boolean sessionGroupVar(@ModelAttribute("ClansWebApp") GroupModel group,
+            ModelMap model, HttpSession session) {
         try {
-            UserModel me = (UserModel)session.getAttribute("user_data");
-            UserModel other = (UserModel)session.getAttribute("other_user");
+
+            session.setAttribute("group_data", group);
+            return true;
+
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/switchUserPage", method = RequestMethod.GET)
+    public String switchUserPage(@ModelAttribute("ClansWebApp") UserModel user, ModelMap model, HttpSession session) {
+        try {
+            UserModel me = (UserModel) session.getAttribute("user_data");
+            UserModel other = (UserModel) session.getAttribute("other_user");
             /* CHECK IF SWITCHING TO OWN PAGE */
-            if(me.getUserId()==other.getUserId()){
+            if (me.getUserId() == other.getUserId()) {
                 model.put("user", me);
                 PageModel userPage = new PagesDAO().getUserPage(me);
                 model.put("page", userPage);
                 return "user_page";
-            }
-            else{
+            } else {
                 /* GOING TO OTHER USER'S PAGE */
                 PageModel userPage = new PagesDAO().getUserPage(other);
                 userPage.setGroup(new GroupModel());
@@ -187,7 +202,25 @@ public class UserController {
                 return "other_user_page";
             }
 
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return "index";
+    }
+
+    @RequestMapping(value = "/switchGroupPage", method = RequestMethod.GET)
+    public String switchGroupPage(@ModelAttribute("ClansWebApp") UserModel user, ModelMap model, HttpSession session) {
+        try {
+            GroupModel group = (GroupModel) session.getAttribute("group_data");
+            PageModel groupPage = new PagesDAO().getGroupPage(group);
+            UserModel me = (UserModel) session.getAttribute("user_data");
+            
+            groupPage.setUser(me);
+            
+            model.put("page", groupPage);
+            return "group_page";
+
+        } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
         }
         return "index";

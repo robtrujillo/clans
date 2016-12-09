@@ -40,7 +40,7 @@ app.controller('myCtrl', function ($scope, $http) {
             url: '/ClansWebApp/sessionVar',
             params: {"userId": temp.userId}
         }).then(function (response) {
-            alert($scope.id_user);
+            //alert($scope.id_user);
         }
         , function errorCallBack(response) {
             alert("error in get posts");
@@ -271,7 +271,7 @@ app.controller('myCtrl', function ($scope, $http) {
         var y = $http({
             method: 'GET',
             url: '/ClansWebApp/signout',
-            params: {"userId": $scope.userId, "signedIn": false}
+            params: {"userId": $scope.id_user, "signedIn": false}
         }).then(function (response) {
             
         }, function errorCallBack(response) {
