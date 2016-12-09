@@ -51,14 +51,17 @@
                         <div ng-repeat="post in posts" class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <input readonly type="text" class="form-control" ng-model="post.content"></input> 
+                                    <input ngReadonly="${page.group.userId} != ${page.user.userId} && ${page.user.userId} != post.userId)" type="text" class="form-control" ng-model="post.content"></input> 
                                     by {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editPost($index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editPost($index, -1)'>Unlike</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    
+                                    <a ng-show="${page.group.userId} == ${page.user.userId} || ${page.user.userId} == post.userId" ng-click='editPost($index, 0)'>Save Edit</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a ng-show="${page.group.userId} == ${page.user.userId} || ${page.user.userId} == post.userId" ng-click='deletePost($index)'>Delete</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click="getComments(post.postId)" data-toggle="collapse" data-parent="#accordion"  href="#c_{{$index}}">
                                         See {{post.commentCount}} Comments</a>
                                     <br/>
@@ -70,12 +73,16 @@
                             <div id="c_{{$index}}" class="panel-collapse collapse ">
                                 <p ng-show='post.comments.length === 0'>No Comments</p>
                                 <div class="panel-body " ng-repeat='comment in post.comments'>
-                                    <input readonly type="text" class="form-control" ng-model="comment.content"></input> 
+                                    <input ngReadonly="${page.group.userId} == ${page.user.userId}" type="text" class="form-control" ng-model="comment.content"></input> 
                                     by {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editComment($parent.$index, $index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editComment($parent.$index, $index, -1)'>Unlike</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a ng-show="${page.group.userId} == ${page.user.userId}" ng-click='editComment($parent.$index, $index, 0)'>Save Edit</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a ng-show="${page.group.userId} == ${page.user.userId}" ng-click='deleteComment($parent.$index, $index)'>Delete</a>
                                     
 
                                 </div>

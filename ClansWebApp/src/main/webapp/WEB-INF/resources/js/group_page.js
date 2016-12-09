@@ -8,6 +8,7 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope, $http) {
 
     /* id of page */
+    
     $scope.pageId = parseInt($("#pageId").val());
     
     /* id of logged in user */
@@ -16,6 +17,8 @@ app.controller('myCtrl', function ($scope, $http) {
     $scope.groupId = parseInt($("#groupId").val());
     /* id of owner of group - has admin priviledge */
     $scope.ownerId = parseInt($("#ownerId").val());
+    
+    
 
 
     $scope.names = [];
@@ -30,6 +33,7 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.receiver = {"receiver": $scope.names[0]};
             $scope.otherUser = {"user": $scope.names[0]};
             $scope.sessionVar();
+            alert("Owner " + $scope.ownerId + " User " + $scope.userId )
         }, function errorCallBack(response) {
             alert("error in get posts");
         });

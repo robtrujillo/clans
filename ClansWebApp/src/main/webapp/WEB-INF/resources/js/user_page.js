@@ -296,6 +296,10 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("sign out error\n");
         });
     }
+    
+    $scope.deleteMember = function(){
+        
+    }
 
 
 

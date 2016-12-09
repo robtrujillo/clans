@@ -161,7 +161,9 @@
                     <button ng-click="getMyGroups()"class="btn btn-default" data-toggle="collapse" data-target="#my_grps">Click Me to Look at Groups You are a Member of!</button>
                     <ul  class="collapse" id="my_grps">
                         <li ng-show="!(groups.length > 0)">Not a member of any groups</li>
-                        <li ng-repeat="group in groups">{{ group.groupName}}</li>
+                        <li ng-repeat="group in groups">{{ group.groupName}}
+                            <button ng-click="deleteMember(group.groupId, group)">Unjoin Group</button>
+                        </li>
                     </ul>
                 </div>
             </div>
