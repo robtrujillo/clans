@@ -67,7 +67,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <input type="text" class="form-control" ng-model="post.content"></input> 
-                                    by {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
+                                    by {{post.firstName}} {{post.lastName}}  {{post.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editPost($index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -89,7 +89,7 @@
                                 <p ng-show='post.comments.length === 0'>No Comments</p>
                                 <div class="panel-body " ng-repeat='comment in post.comments'>
                                     <input type="text" class="form-control" ng-model="comment.content"></input> 
-                                    by {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
+                                    by {{comment.firstName}} {{comment.lastName}}  {{comment.likeCount}} Likes
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <a ng-click='editComment($parent.$index, $index, 1)'>Like</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;

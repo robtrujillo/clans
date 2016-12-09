@@ -28,7 +28,7 @@
                 <input type="hidden" id="groupId" value='${page.group.groupId}'/>
                 <input type="hidden" id="ownerId" value='${page.group.userId}'/>
                 <input type="hidden" id="userId" value='${page.user.userId}'/>
-                <h1>${page.group.groupName} groups</h1>
+                <h1>${page.group.groupName}</h1>
                 <input ng-model="groupName" ng-show="${page.group.userId} == ${page.user.userId}" id="np" type="text" class="form-control" placeholder="New Group Name"></input> 
                 <button ng-show="${page.group.userId} == ${page.user.userId}" class="btn btn-success" ng-click="updateGroups()">Save new group name!</button>
                 <form:form method="GET" commandName="user" action="/ClansWebApp/logout">

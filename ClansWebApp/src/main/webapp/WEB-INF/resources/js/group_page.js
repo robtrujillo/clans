@@ -33,7 +33,7 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.receiver = {"receiver": $scope.names[0]};
             $scope.otherUser = {"user": $scope.names[0]};
             $scope.sessionVar();
-            alert("Owner " + $scope.ownerId + " User " + $scope.userId )
+            //alert("Owner " + $scope.ownerId + " User " + $scope.userId )
         }, function errorCallBack(response) {
             alert("error in get posts");
         });
