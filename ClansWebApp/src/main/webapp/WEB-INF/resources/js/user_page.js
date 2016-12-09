@@ -155,8 +155,74 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     }
 
-
-
+    $scope.sent = false;
+    $scope.sendMessage = function(msg, sbj){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/saveMessage',
+            params: {"senderId": $scope.userId, "receiverId":$scope.receiver.receiver.userId, "content":msg, "subject":sbj}
+        }).then(function (response) {
+            $scope.sent = true;
+            //$scope.posts[index]["comments"].splice(commentIndex, 1);
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+            $scope.sent = false;
+        });
+    }
+    
+    $scope.getConvos = function(){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getMessages',
+            params: {"userId": $scope.userId}
+        }).then(function (response) {
+            $scope.convos = response.data;
+            //$scope.posts[index]["comments"].splice(commentIndex, 1);
+        }, function errorCallBack(response) {
+            alert("get convos error\n");
+        });
+    }
+    
+    $scope.getMessages = function(otherId, index){
+        i = index;
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getConvos',
+            params: {"senderId": $scope.userId, "receiverId":otherId}
+        }).then(function (response) {
+            $scope.convos[i]["msgs"] = response.data;
+            
+        }, function errorCallBack(response) {
+            alert("get convos error\n");
+        });
+    }
+    
+    $scope.deleteMessage = function (i1, i2) {
+        convoIndex = i1;
+        messageIndex = i2;
+        message = $scope.convos[convoIndex].msgs[messageIndex];
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/byeMessage',
+            params: {"messageId": message.messageId}
+        }).then(function (response) {
+            $scope.convos[convoIndex]["msgs"].splice(messageIndex, 1);
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
+    
+    $scope.signout = function(){
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/signout',
+            params: {"userId": $scope.userId, "signedIn": false}
+        }).then(function (response) {
+            
+        }, function errorCallBack(response) {
+            alert("get comments error\n");
+        });
+    }
 
 
 

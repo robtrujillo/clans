@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,7 +40,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@ModelAttribute("ClansWebApp") UserModel user,
-            ModelMap model) {
+            ModelMap model, HttpSession session) {
         try {
 
             if (user.getEmail().equals("") || user.getPassword().equals("")) {
@@ -55,21 +56,41 @@ public class UserController {
             /* GET THE USER LOGGING IN */
             UserModel loggedUser = ums.get(0);
             if (loggedUser.isIsEmployee()) {
-               loggedUser = new EmployeesDAO().getEmployeeModelById(loggedUser.getUserId());
-               model.put("employee", loggedUser);
-               if(((EmployeeModel)loggedUser).isIsManager()){
-                   return "manager_page";
-               }
-               return "employee_page";
+                loggedUser = new EmployeesDAO().getEmployeeModelById(loggedUser.getUserId());
+                model.put("employee", loggedUser);
+                if (((EmployeeModel) loggedUser).isIsManager()) {
+                    return "manager_page";
+                }
+                return "employee_page";
             } else {
                 /* USER LOGGED IN. RETURN THEIR PAGE DATA */
+                loggedUser.setSignedIn(true);
+                new UsersDAO().updateUser(loggedUser);
                 PageModel userPage = new PagesDAO().getUserPage(loggedUser);
                 model.put("page", userPage);
+                session.setAttribute("user_data", loggedUser);
                 return "user_page";
             }
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "index";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(@ModelAttribute("ClansWebApp") UserModel user, ModelMap model, HttpSession session) {
+        try {
+
+            /* UPDATE USER AND RETURN TO LOGIN PAGE */
+            UserModel loggedOutUser = (UserModel)session.getAttribute("user_data");
+            loggedOutUser.setSignedIn(false);
+            new UsersDAO().updateUser(loggedOutUser);
+            model.put("user", user);
+            return "index";
+
+        } catch (Exception e) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
         }
         return "index";
     }
@@ -93,9 +114,16 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/updateUsers", method = RequestMethod.POST)
-    public void updateUsers(@ModelAttribute("ClansWebApp") UserModel user) {
-
+    @RequestMapping(value = "/saveUsers", method = RequestMethod.GET)
+    public @ResponseBody
+    boolean updateUsers(@ModelAttribute("ClansWebApp") UserModel user) {
+        try {
+            new UsersDAO().updateUser(user);
+            return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
     }
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
@@ -110,9 +138,10 @@ public class UserController {
         }
         return "index";
     }
-    
+
     @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<UserModel> getAllUsers(@ModelAttribute("ClansWebApp") UserModel user) {
+    public @ResponseBody
+    ArrayList<UserModel> getAllUsers(@ModelAttribute("ClansWebApp") UserModel user) {
         try {
             ArrayList<UserModel> listUsers = new UsersDAO().getUsers(user);
             return listUsers;
@@ -121,7 +150,7 @@ public class UserController {
         }
         return null;
     }
-    
+
     public ModelAndView listUsers(ModelAndView model, @ModelAttribute UserModel user) throws SQLException, IOException {
         try {
             user = new UserModel();

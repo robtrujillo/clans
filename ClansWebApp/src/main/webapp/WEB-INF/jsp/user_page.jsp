@@ -25,6 +25,11 @@
             <input type="hidden" id="userId" value='${page.user.userId}'/>
             <input type="hidden" id="pageId" value='${page.pageId}'/>
             <h1>${page.user.firstName} ${page.user.lastName}</h1>
+            
+            <form:form method="GET" commandName="user" action="/ClansWebApp/logout">
+               
+                <button class="btn btn-signout btn-warning" type="submit">Sign Out</button>  
+            </form:form>
             <table>
                 <tr>
                     <td><p class="text-muted" for="email">Email__</p></td>
@@ -42,19 +47,19 @@
 
                 <div class="panel-group" id="accordion">
                     <input id="np" type="text" class="form-control" placeholder="Type here for new post"></input> 
-                                <a ng-click='addPost($index, post.postId)'>Create Post</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a ng-click='addPost($index, post.postId)'>Submit New Post</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <div ng-repeat="post in posts" class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <input type="text" class="form-control" ng-model="post.content"></input> 
                                 by {{post.firstName}} {{post.lastName}} - {{post.likeCount}} Likes
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editPost($index,1)'>Like</a>
+                                <a ng-click='editPost($index, 1)'>Like</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editPost($index,-1)'>Unlike</a>
+                                <a ng-click='editPost($index, -1)'>Unlike</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editPost($index,0)'>Save Edit</a>
+                                <a ng-click='editPost($index, 0)'>Save Edit</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <a ng-click='deletePost($index)'>Delete</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,38 +67,76 @@
                                     See {{post.commentCount}} Comments</a>
                                 <br/>
                                 <input id="nc_{{$index}}" type="text" class="form-control" placeholder="Type here for new comment"></input> 
-                                <a ng-click='addComment($index, post.postId)'>Create Comment</a>
+                                <a ng-click='addComment($index, post.postId)'>Submit Comment</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </h4>
                         </div>
-                        <div id="c_{{$index}}" class="panel-collapse collapse">
-                            <p ng-show='post.comments.length===0'>No Comments</p>
+                        <div id="c_{{$index}}" class="panel-collapse collapse ">
+                            <p ng-show='post.comments.length === 0'>No Comments</p>
                             <div class="panel-body " ng-repeat='comment in post.comments'>
                                 <input type="text" class="form-control" ng-model="comment.content"></input> 
                                 by {{comment.firstName}} {{comment.lastName}} - {{comment.likeCount}} Likes
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editComment($parent.$index,$index,1)'>Like</a>
+                                <a ng-click='editComment($parent.$index, $index, 1)'>Like</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editComment($parent.$index,$index,-1)'>Unlike</a>
+                                <a ng-click='editComment($parent.$index, $index, -1)'>Unlike</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='editComment($parent.$index,$index,0)'>Save Edit</a>
+                                <a ng-click='editComment($parent.$index, $index, 0)'>Save Edit</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a ng-click='deleteComment($parent.$index,$index)'>Delete</a>
-                                
+                                <a ng-click='deleteComment($parent.$index, $index)'>Delete</a>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </table>
-                <div id="messages">
-                    <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to start making a message!</button>
-                    <select ng-show="names.length > 0" ng-model="receiver.receiver" ng-options='user as getFullName(user) for user in names'>
+            <div id="send_msg">
+                <button id="msgBtn" ng-click="getNames()" class="btn btn-default">Click me to start making a message!</button>
+                <select ng-show="names.length > 0" ng-model="receiver.receiver" ng-options='user as getFullName(user) for user in names'>
                     Select a User to message</select>
-                    <input ng-show="names.length > 0" placeholder="Enter Message Here" type="text" class="form-control" ng-model="messageContent"></input> 
-                    <button ng-show="names.length > 0" ng-click="sendMessage(selectedName)" class="btn btn-facebook">Click to Send</button>
-                </div>
-            
+                <input ng-show="names.length > 0" placeholder="Enter Subject for Message Here" type="text" class="form-control" ng-model="subjectContent"></input> 
+                <input ng-show="names.length > 0" placeholder="Enter Message Here" type="text" class="form-control" ng-model="messageContent"></input> 
+                <span><button ng-show="names.length > 0" ng-click="sendMessage(messageContent, subjectContent)" class="btn btn-facebook">Click to Send</button>
+                    <label ng-show="sent">Sent!</label></span>
+            </div>
+            <br/>
+            <div check_msg>
 
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a ng-click='getConvos()' data-toggle="collapse" href="#collapse1">Click me to see who you've been messaging!</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <li ng-repeat='convo in convos' class="list-group-item">
+                                    <div  class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a ng-click='getMessages(convo.userId, $index)' data-toggle="collapse" href="#ms_{{$index}}">Messages with {{convo.firstName}} {{convo.lastName}}</a>
+                                                </h4>
+                                            </div>
+                                            <div id="ms_{{$index}}" class="panel-collapse collapse">
+                                                <ul class="list-group">
+                                                    <li ng-repeat='msg in convo.msgs' class="list-group-item">
+                                                        <label>{{msg.subject}}</label>
+                                                        {{msg.content}} -by {{msg.senderFName}} {{msg.senderLName}}
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a ng-click='deleteMessage($parent.$index, $index)'>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

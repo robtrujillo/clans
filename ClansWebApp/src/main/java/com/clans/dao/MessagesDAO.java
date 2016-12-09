@@ -26,20 +26,19 @@ public class MessagesDAO {
 
     public void updateMessages(MessageModel mm) throws SQLException, ClassNotFoundException {
         /*PREPARE*/
-        PreparedStatement ps = dbs.getPreparedStatement("call update_messages(?,?,?,?,?)");
-        ps.setInt(1, mm.getMessageId());
-        ps.setInt(2, mm.getSenderId());
-        ps.setInt(3, mm.getReceiverId());
-        ps.setString(4, mm.getSubject());
-        ps.setString(5, mm.getContent());
+        PreparedStatement ps = dbs.getPreparedStatement("call update_messages(?,?,?,?)");
+        ps.setInt(1, mm.getSenderId());
+        ps.setInt(2, mm.getReceiverId());
+        ps.setString(3, mm.getSubject());
+        ps.setString(4, mm.getContent());
         /*EXECUTE*/
         ps.executeQuery();
     }
     
-    public ArrayList<MessageModel> getConversation(UserModel um1, UserModel um2) throws SQLException, ClassNotFoundException{
+    public ArrayList<MessageModel> getConversation(MessageModel message) throws SQLException, ClassNotFoundException{
         PreparedStatement ps = dbs.getPreparedStatement("call get_conversation(?, ?)");
-        ps.setInt(1, um1.getUserId());
-        ps.setInt(2, um2.getUserId());
+        ps.setInt(1, message.getSenderId());
+        ps.setInt(2, message.getReceiverId());
         return getConversationArray(ps.executeQuery());
     }
     
@@ -49,7 +48,7 @@ public class MessagesDAO {
         return getMessageesArray(ps.executeQuery());
     }        
     
-    public boolean removeMessage(MessageModel mm) throws SQLException, ClassNotFoundException {
+    public boolean deleteMessage(MessageModel mm) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call delete_messages(?)");
         ps.setInt(1,mm.getMessageId());
         ps.executeQuery();
@@ -61,6 +60,7 @@ public class MessagesDAO {
         while(rs.next()) {
             MessageModel mm = new MessageModel();
             mm.setContent(rs.getString("Content"));
+             mm.setMessageId(rs.getInt("MessageId"));
             mm.setSubject(rs.getString("MsgSubject"));
             mm.setDate(rs.getDate("DateSent"));
             //UserModel sender = new UserModel();
