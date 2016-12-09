@@ -197,6 +197,14 @@
                             <label>Pick account:</label>
                             <select ng-model="acct2Select" ng-options='x.firstName for x in accts2'>
                             </select> 
+                            <label>
+                                <input type="radio" ng-model="Sgtype" value="Past">
+                                By Past Transaction
+                            </label>
+                            <label>
+                                <input type="radio" ng-model="Sgtype" value="Pref">
+                                By Preference
+                            </label>
                             <button ng-click="getSuggestion()"> Get Suggestion</button>
                             <div ng-repeat="sug in suggestion">
                                 <h4> {{sug.itemName}} </h4>
@@ -224,7 +232,7 @@
                     </div>
                 </div>
 
-                  <div class="panel-group">
+                <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">

@@ -220,17 +220,30 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     };
 
+    $scope.Sgtype = "Past";
     $scope.suggestion = [];
     $scope.getSuggestion = function () {
-        $http({
-            method: 'GET',
-            url: '/ClansWebApp/getSuggestion',
-            params: {accountId: $scope.acct2Select.accountId}
-        }).then(function (response) {
-            $scope.suggestion = response.data;
-        }, function errorCallBack(response) {
-            alert("error in get suggestions");
-        });
+        if ($scope.Sgtype === "Past") {
+            $http({
+                method: 'GET',
+                url: '/ClansWebApp/getSuggestion',
+                params: {accountId: $scope.acct2Select.accountId}
+            }).then(function (response) {
+                $scope.suggestion = response.data;
+            }, function errorCallBack(response) {
+                alert("error in get suggestions");
+            });
+        } else {
+             $http({
+                method: 'GET',
+                url: '/ClansWebApp/getSuggestion',
+                params: {userId: $scope.acct2Select.userId}
+            }).then(function (response) {
+                $scope.suggestion = response.data;
+            }, function errorCallBack(response) {
+                alert("error in get suggestions");
+            });
+        }
     };
 
     $scope.groups = [];
@@ -258,7 +271,7 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("error in get Best Selling item");
         });
     }
-    
+
     $scope.histories = [];
     $scope.getHistory = function () {
         $http({

@@ -63,7 +63,7 @@ public class AdDAO {
     public ArrayList<AdModel> getSuggestion(AccountModel acm) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_advertisements(?,?,?,?,?)");
         ps.setInt(1, 0);
-        ps.setInt(2, 0);
+        ps.setInt(2, acm.getUserId());
         ps.setInt(3, acm.getAccountId());
         ps.setString(4, "");
         ps.setString(5, "");
