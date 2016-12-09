@@ -46,6 +46,35 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("error in get posts");
         });
     }
+    
+    $scope.getGroups = function () {
+        var y = $http({
+            method: 'GET',
+            url: '/ClansWebApp/getGroups',
+            params: {"userId": 0}
+        }).then(function (response) {
+            $scope.groups = response.data;
+        }, function errorCallBack(response) {
+            alert("error making group\n");
+        });
+    }
+    $scope.getGroups();
+    
+    $scope.sessionGroupVar = function () {
+        
+        var temp = $scope.selectedGroup;
+        var x = $http({
+            method: 'GET',
+            url: '/ClansWebApp/sessionGroupVar',
+            params: {"groupId": temp.groupId}
+        }).then(function (response) {
+            //alert("success?");
+        }
+        , function errorCallBack(response) {
+            alert("error in get posts");
+        });
+    }
+    
     var x = $http({
         method: 'GET',
         url: '/ClansWebApp/getPosts',
@@ -254,17 +283,7 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     }
 
-    $scope.getGroups = function () {
-        var y = $http({
-            method: 'GET',
-            url: '/ClansWebApp/getGroups',
-            params: {"ownerId": $scope.userId, "groupName": $scope.groupName}
-        }).then(function (response) {
-
-        }, function errorCallBack(response) {
-            alert("error making group\n");
-        });
-    }
+    
 
     $scope.signout = function () {
         var y = $http({
@@ -276,6 +295,10 @@ app.controller('myCtrl', function ($scope, $http) {
         }, function errorCallBack(response) {
             alert("sign out error\n");
         });
+    }
+    
+    $scope.deleteMember = function(){
+        
     }
 
 

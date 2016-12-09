@@ -33,11 +33,16 @@
                 <form:form method="GET" commandName="user" action="/ClansWebApp/logout">
                     <button class="btn btn-signout btn-warning" type="submit">Sign Out</button>  
                 </form:form>
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <select ng-change="sessionVar()" ng-model="otherUser.user" ng-options='user as getFullName(user) for user in names'>
-                        Select a Users</select>
-                     <form:form method="GET" commandName="user" action="/ClansWebApp/switchUserPage">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <select ng-change="sessionVar()" ng-model="otherUser.user" ng-options='user as getFullName(user) for user in names'>
+                    Select a Users</select>
+                    <form:form method="GET" commandName="user" action="/ClansWebApp/switchUserPage">
                     <button id="leaveBtn" class="btn btn-signout btn-warning" type="submit">Go to their page!</button>  
+                </form:form>
+                <select  ng-change="sessionGroupVar()" ng-model="selectedGroup" ng-options='x.groupName for x in groups'>
+                    Select a Users</select>
+                    <form:form method="GET" commandName="user" action="/ClansWebApp/switchGroupPage">
+                    <button class="btn btn-signout btn-warning" type="submit">Go to a group page!</button>  
                 </form:form>
                 <table>
                     <tr>
@@ -156,7 +161,9 @@
                     <button ng-click="getMyGroups()"class="btn btn-default" data-toggle="collapse" data-target="#my_grps">Click Me to Look at Groups You are a Member of!</button>
                     <ul  class="collapse" id="my_grps">
                         <li ng-show="!(groups.length > 0)">Not a member of any groups</li>
-                        <li ng-repeat="group in groups">{{ group.groupName }}</li>
+                        <li ng-repeat="group in groups">{{ group.groupName}}
+                            <button ng-click="deleteMember(group.groupId, group)">Unjoin Group</button>
+                        </li>
                     </ul>
                 </div>
             </div>
