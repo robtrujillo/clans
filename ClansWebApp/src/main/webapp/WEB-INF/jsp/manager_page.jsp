@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Employee Page</title>
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/bootstrap.min.css" />
@@ -22,7 +22,7 @@
         <script src="${cp}/resources/js/frameworks/bootstrap.min.js"></script>
     </head>
     <body>
-         <h2>MANAGER</h2>
+        <h2>MANAGER</h2>
         <div ng-app="myApp" ng-controller="myCtrl">
             <input type="hidden" id="userId" value='${employee.userId}'/>
             <h1>${employee.firstName} ${employee.lastName}</h1>
@@ -40,8 +40,8 @@
                     <td><p id="email" class="text-info">${employee.street}, ${employee.city}, ${employee.state} ${employee.zipcode}</p></td>
                 </tr>
 
-                
-<!--                EDIT EMPLOYEE-->
+
+                <!--                EDIT EMPLOYEE-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -63,15 +63,15 @@
                                     <label>Update Manager Status:</label>
                                     <input placeholder="0 or 1" type="text" ng-model="isMan" class="form-control">
                                 </div>
-                              
+
                             </ul>
-                            
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Update Employee</button>
                         </div>
                     </div>
                 </div>
-                
-<!--                ADD EMPLOYEE-->
+
+                <!--                ADD EMPLOYEE-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -129,14 +129,14 @@
                                     <label>Is Employee?:</label>
                                     <input placeholder="Bool(0,1)" type="text" ng-model="isEmpl" class="form-control">
                                 </div>
-          
+
                             </ul>
-                            
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='updateUser()'>Add Employee</button>
                         </div>
                     </div>
                 </div>
-<!--                DELETE EMPLOYEE-->
+                <!--                DELETE EMPLOYEE-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -150,13 +150,13 @@
                                     <label>Employee ID:</label>
                                     <input type="text" ng-model="emplId" class="form-control">
                                 </div>
-                                </ul>
-                            
+                            </ul>
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='deleteEmployee()'>DELETE EMPLOYEE</button>
                         </div>
                     </div>
                 </div>
-<!--                All Items-->
+                <!--                All Items-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -170,14 +170,14 @@
                                     <label>Employee ID:</label>
                                     <input type="text" ng-model="emplId" class="form-control">
                                 </div>
-                                </ul>
-                            
+                            </ul>
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='getAdvertisement()'>DELETE EMPLOYEE</button>
                         </div>
                     </div>
                 </div>
 
-<!--                TRANSACTIONS-->
+                <!--                TRANSACTIONS-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -185,30 +185,30 @@
                                 <a data-toggle="collapse" href="#collapse5">Transactions</a>
                             </h4>
                         </div>
-                            <ul class="list-group">
-                        <div id="collapse5" class="panel-collapse collapse">
-                            <ul class="list-group">
+                        <ul class="list-group">
+                            <div id="collapse5" class="panel-collapse collapse">
+                                <ul class="list-group">
                                     <label>Search By Item Name:</label>
                                     <input placeholder = "Item Name" type="text" ng-model="itemType" class="form-control">
-                                </div>
+                                    </div>
                                 </ul>
-                            
-                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
-                            
-                            <ul class="list-group">
-                                <div class="form-group">
-                                    <label>Search By User Name:</label>
-                                    <input placeholder = "User Name" type="text" ng-model="itemType" class="form-control">
-                                </div>
+
+                                <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+
+                                <ul class="list-group">
+                                    <div class="form-group">
+                                        <label>Search By User Name:</label>
+                                        <input placeholder = "User Name" type="text" ng-model="itemType" class="form-control">
+                                    </div>
                                 </ul>
-                            
-                            <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
-                                
-                        </div>
+
+                                <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
+
+                            </div>
                     </div>
                 </div>
-                        
-<!--                Revenue-->
+
+                <!--                Revenue-->
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -222,23 +222,30 @@
                                     <label>Search By Item Name:</label>
                                     <input placeholder = "Item Name" type="text" ng-model="itemType" class="form-control">
                                 </div>
-                                </ul>
-                            
+                            </ul>
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
-                            
+
                             <ul class="list-group">
                                 <div class="form-group">
                                     <label>Search By Item Type:</label>
                                     <input placeholder = "Item Type" type="text" ng-model="itemType" class="form-control">
                                 </div>
-                                </ul>
-                            
+                            </ul>
+
                             <button class="btn btn-lg btn-signin btn-default"  ng-click='updateEmployee()'>Search</button>
-                                
+
                         </div>
                     </div>
                 </div>
+                <!--                TOP EMPLOYEE-->
 
+                <div id="collapse1" class="panel-collapse collapse">
+
+                    <a ng-click='updateAd()'>Create Advertisement</a>
+
+
+                </div>
 
         </div>
     </body>
