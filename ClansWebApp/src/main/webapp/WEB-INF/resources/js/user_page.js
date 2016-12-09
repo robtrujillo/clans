@@ -18,10 +18,15 @@ app.controller('myCtrl', function ($scope, $http) {
             params: {"userId": 0}
         }).then(function (response) {
             $scope.names = response.data;
+            //$scope.selectedName = $scope.names[0].firstName;
+            $scope.receiver = {"receiver": $scope.names[0]}
         }, function errorCallBack(response) {
             alert("error in get posts");
         });
     }
+    $scope.getFullName = function (user) {
+        return user.firstName + ' ' + user.lastName;
+    };
 
     var x = $http({
         method: 'GET',
