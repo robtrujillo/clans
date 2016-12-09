@@ -19,7 +19,8 @@ import java.util.ArrayList;
  * @author Chuntak
  */
 public class AdDAO {
-        DBSingleton dbs;
+
+    DBSingleton dbs;
 
     public AdDAO() throws SQLException, ClassNotFoundException {
         dbs = DBSingleton.getSingleton();
@@ -30,7 +31,7 @@ public class AdDAO {
         PreparedStatement ps = dbs.getPreparedStatement("call update_advertisements(?,?,?,?,?,?,?,?)");
         ps.setInt(1, am.getAdId());
         ps.setInt(2, am.getUserId());
-        ps.setString(3,am.getItemType());
+        ps.setString(3, am.getItemType());
         ps.setString(4, am.getCompany());
         ps.setString(5, am.getItemName());
         ps.setString(6, am.getContent());
@@ -58,8 +59,18 @@ public class AdDAO {
         ps.setString(5, am.getCompany());
         return getAdArray(ps.executeQuery());
     }
-    
-     public ArrayList<AdModel> getAllAd() throws SQLException, ClassNotFoundException {
+
+    public ArrayList<AdModel> getSuggestion(AccountModel acm) throws SQLException, ClassNotFoundException {
+        PreparedStatement ps = dbs.getPreparedStatement("call get_advertisements(?,?,?,?,?)");
+        ps.setInt(1, 0);
+        ps.setInt(2, 0);
+        ps.setInt(3, acm.getAccountId());
+        ps.setString(4, "");
+        ps.setString(5, "");
+        return getAdArray(ps.executeQuery());
+    }
+
+    public ArrayList<AdModel> getAllAd() throws SQLException, ClassNotFoundException {
         PreparedStatement ps = dbs.getPreparedStatement("call get_all_advertisements()");
         return getAdArray(ps.executeQuery());
     }
@@ -68,15 +79,15 @@ public class AdDAO {
         ArrayList<AdModel> aml = new ArrayList<AdModel>();
         while (rs.next()) {
             AdModel am = new AdModel();
-            try{ am.setItemName(rs.getString("ItemName")); } catch(Exception e) {}
-            try{ am.setCompany(rs.getString("Company")); } catch(Exception e) {}
-            try{ am.setContent(rs.getString("Content")); } catch(Exception e) {}
-            try{ am.setUnitPrice(rs.getDouble("UnitPrice")); } catch(Exception e) {}
-            try{ am.setNumAvailable(rs.getInt("NumAvailable")); } catch(Exception e) {}
-            try{ am.setUserId(rs.getInt("EmployeeId"));} catch(Exception e) {}             
-            try{ am.setAdId(rs.getInt("AdvertisementId")); } catch(Exception e) {}
-            try{ am.setItemType(rs.getString("ItemType")); } catch(Exception e) {}
-            try{ am.setDate(rs.getDate("DateCreated")); } catch(Exception e) {}
+            try { am.setItemName(rs.getString("ItemName")); } catch (Exception e) {}
+            try { am.setCompany(rs.getString("Company")); } catch (Exception e) {}
+            try { am.setContent(rs.getString("Content")); } catch (Exception e) {}
+            try { am.setUnitPrice(rs.getDouble("UnitPrice"));} catch (Exception e) {}
+            try { am.setNumAvailable(rs.getInt("NumAvailable"));} catch (Exception e) {}
+            try { am.setUserId(rs.getInt("EmployeeId"));} catch (Exception e) {}
+            try { am.setAdId(rs.getInt("AdvertisementId"));} catch (Exception e) {}
+            try { am.setItemType(rs.getString("ItemType"));} catch (Exception e) {}
+            try { am.setDate(rs.getDate("DateCreated")); } catch (Exception e) {}
             aml.add(am);
         }
         return aml;

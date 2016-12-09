@@ -102,7 +102,7 @@ public class EmployeesDAO {
 
     public ArrayList<UserModel> getMailingList() throws SQLException, ClassNotFoundException {
         /*Prepare sql statements*/
-        return getMailingListArray(dbs.getQuery("get_mailing_list"));
+        return getMailingListArray(dbs.getQuery("call get_mailing_list()"));
     }
 
     private ArrayList<UserModel> getMailingListArray(ResultSet rs) throws SQLException {

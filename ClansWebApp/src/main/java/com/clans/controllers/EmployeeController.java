@@ -7,6 +7,7 @@ package com.clans.controllers;
 
 import com.clans.dao.AccountsDAO;
 import com.clans.dao.AdDAO;
+import com.clans.dao.EmployeesDAO;
 import com.clans.dao.SalesDAO;
 import com.clans.models.AccountModel;
 import com.clans.models.AdModel;
@@ -109,6 +110,26 @@ public class EmployeeController {
             return false;
         }
         return true;
+    }
+    
+    @RequestMapping(value = "/getMailingList", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<UserModel> getMailingList() {
+        try {            
+            return new EmployeesDAO().getMailingList();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @RequestMapping(value = "/getSuggestion", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<AdModel> getSuggestion(@ModelAttribute("ClansWebApp") AccountModel acm) {
+        try {            
+            return new AdDAO().getSuggestion(acm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     

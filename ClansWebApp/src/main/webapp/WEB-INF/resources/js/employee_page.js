@@ -165,13 +165,13 @@ app.controller('myCtrl', function ($scope, $http) {
 //            private String creditCardNum;
     $scope.acct2Select = null;
     $scope.user2Select = null;
-    
-      $scope.deleteAccount = function () {
+
+    $scope.deleteAccount = function () {
         x = $scope.acct2Select === null ? 0 : $scope.acct2Select.accountId;
         $http({
             method: 'GET',
             url: '/ClansWebApp/deleteAccount',
-            params: {"accountId":x}
+            params: {"accountId": x}
         }).then(function (response) {
             alert("deleted acount");
             $scope.getAllAccts2();
@@ -179,15 +179,27 @@ app.controller('myCtrl', function ($scope, $http) {
             alert("error in delete Account");
         });
     };
-    
-    
+
+    $scope.mailingList = [];
+    $scope.getMailingList = function () {
+        $http({
+            method: 'GET',
+            url: '/ClansWebApp/getMailingList',
+            params: {}
+        }).then(function (response) {
+            $scope.mailingList = response.data;
+        }, function errorCallBack(response) {
+            alert("error in update Account");
+        });
+    }
+
     $scope.updateAccount = function () {
         x = $scope.acct2Select === null ? 0 : $scope.acct2Select.accountId;
         u = $scope.user2Select === null ? 0 : $scope.user2Select.userId;
         $http({
             method: 'GET',
             url: '/ClansWebApp/changeAccount',
-            params: {"userId":u ,"accountId":x, "creditCardNum":$scope.ccNum}
+            params: {"userId": u, "accountId": x, "creditCardNum": $scope.ccNum}
         }).then(function (response) {
             alert("updated acount");
         }, function errorCallBack(response) {
@@ -206,6 +218,19 @@ app.controller('myCtrl', function ($scope, $http) {
         }, function errorCallBack(response) {
             alert("error in get posts");
         });
+    };
+    
+    $scope.suggestion = [];
+    $scope.getSuggestion = function () {
+      $http({
+            method: 'GET',
+            url: '/ClansWebApp/getSuggestion',
+            params: {accountId:$scope.user2Select.accountId}
+        }).then(function (response) {
+            $scope.suggestion = response.data;
+        }, function errorCallBack(response) {
+            alert("error in get suggestions");
+        });  
     };
 });
 
